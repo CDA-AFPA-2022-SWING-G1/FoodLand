@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Toto/GIT/FoodLand/FoodLand_V1/mysql-connector-java-5.1.15-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Toto/GIT/FoodLand/FoodLand_V1/jcalendar-1.4/lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/75013-33-16/eclipse-workspace/FoodLand/FoodLand_V1/mysql-connector-java-5.1.15-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/75013-33-16/eclipse-workspace/FoodLand/FoodLand_V1/jcalendar-1.4/lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

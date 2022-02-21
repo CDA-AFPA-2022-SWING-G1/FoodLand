@@ -62,7 +62,7 @@ public class ControlUtilisateur {
 	
 	
 	public void engageMainView(Utilisateur ut) {
-		//
+		// vrai mvc
 		MainView mv = new MainView(ut);
 		mv.setVisible(false);
 		ControlMainView cmv = new ControlMainView(ut, mv);
