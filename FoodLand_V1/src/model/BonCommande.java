@@ -122,10 +122,6 @@ public class BonCommande {
 	      {
 	         this.fk_id_entreprise = entreprise.getId_entreprise();    
 	      }
-	      else
-	      {
-	         this.fk_id_entreprise = null;
-	      }
 	}
 	
 
@@ -147,10 +143,6 @@ public class BonCommande {
 	      if (type_commande != null)
 	      {
 	         this.fk_id_commande = type_commande.getId_type_commande();    
-	      }
-	      else
-	      {
-	         this.fk_id_commande = null;
 	      }
 	}
 	

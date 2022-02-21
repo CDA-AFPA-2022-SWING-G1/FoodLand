@@ -67,7 +67,7 @@ public class AuthentificationView extends JFrame {
 		btnAuth.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-			ControlUtilisateur auth = new ControlUtilisateur();
+			ControlUtilisateur controlAuth = new ControlUtilisateur();
 
 				try {
 				utilisateur = new Utilisateur();
@@ -77,12 +77,12 @@ public class AuthentificationView extends JFrame {
 				HashMe hme = new HashMe();
 				utilisateur.setMdp(hme.sha1(passwordField.getText()));
 				
-				boolean at = auth.authentifier(utilisateur);
+				boolean at = controlAuth.authentifier(utilisateur);
 				
-				System.out.println("retourempController: " + auth.getUtilisateur().toString()); 
+				System.out.println("retourempController: " + controlAuth.getUtilisateur().toString()); 
 				System.out.println(at);
 				if(at== true) {
-					auth.engageMainView(utilisateur);
+					controlAuth.engageMainView(utilisateur);
 					dispose();
 				}else {
 					JOptionPane.showMessageDialog(null, "utilisateur non authentifier.");

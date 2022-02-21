@@ -7,9 +7,12 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Vector;
 
+import model.Compte;
 import model.Role;
 import outils.ConnectionDB;
 
@@ -33,32 +36,114 @@ public class DaoRole implements Dao<Role> {
 	
 	@Override
 	public int create(Role t) {
-		// TODO Auto-generated method stub
-		return 0;
+		int res = 0;
+		String insert = "INSERT INTO role (lib_role) VALUES ("
+				//+ "'" + t.getId_role() + "', "
+				+ "'" + t.getLibelle_role() + "'"
+				+ ");";
+		try {
+			stmt = c.createStatement();
+			res = stmt.executeUpdate(insert);
+		} catch (SQLException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+		return res;
 	}
 
+	/**
+	 * read role by its  id
+	 */
 	@Override
 	public Role read(Role t) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			stmt = c.createStatement();
+			String read = "SELECT * FROM role WHERE id_role =" + t.getId_role();
+			rs = stmt.executeQuery(read);
+			
+			while(rs.next()) {
+//				System.out.println(rs.getInt("id_role"));
+//				System.out.println(rs.getString("lib_role"));
+
+				t.setId_role((rs.getInt("id_role")));
+				t.setLibelle_role((rs.getString("lib_role")));
+
+			}
+			
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return t;
 	}
 
+	/**
+	 * update role by its id
+	 */
 	@Override
 	public int update(Role t) {
-		// TODO Auto-generated method stub
-		return 0;
+		int r = 0;
+
+		try {
+			System.out.println(c.toString());
+			stmt = c.createStatement();
+			
+			String update = "UPDATE role SET " 
+					//+ "id_role= '" + t.getId_role()+ "', "
+					+ "lib_role= '" + t.getLibelle_role() + "'"
+					+ "WHERE id_role = " + t.getId_role() + "";
+			
+			r = stmt.executeUpdate(update);
+		} catch (SQLException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+
+		return r;
 	}
 
+	/**
+	 * delete role by its id
+	 */
 	@Override
 	public int delete(Role t) {
-		// TODO Auto-generated method stub
-		return 0;
+		int r = 0;
+		try {
+			stmt = c.createStatement();
+			String delete = "DELETE FROM role WHERE id_role = "  
+							+ "'" + t.getId_role() + "'" 
+								+ " AND lib_role = " + "'" + t.getLibelle_role() + "'" + ";";
+			System.out.println(delete);
+			r = stmt.executeUpdate(delete);
+			System.out.println(r);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return r;
 	}
 
 	@Override
 	public List<Role> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Vector<Role> list = new Vector<>();
+		try {
+			stmt = c.createStatement();
+			String select = "SELECT * FROM role;";
+			rs = stmt.executeQuery(select);
+			
+			while(rs.next()) {
+				Role t = new Role();
+				t.setId_role((rs.getInt("id_role")));
+				t.setLibelle_role((rs.getString("lib_role")));
+
+				//System.out.println(compte.toString());
+				list.add(t);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 

@@ -12,23 +12,23 @@ public class Compte {
 	/**
 	 * 
 	 */
-	public Integer id_compte;
+	private Integer id_compte;
 	/**
 	 * 
 	 */
-	public String login_compte;
+	private String login_compte;
 	/**
 	 * 
 	 */
-	public String password_compte;
+	private String password_compte;
 	/**
 	 * 
 	 */
-	public Utilisateur utilisateur;
+	private Utilisateur utilisateur;
 	/**
 	 * 
 	 */
-	public Integer id_utilisateur;
+	private Integer id_utilisateur;
 	
 	public Compte() {
 	}

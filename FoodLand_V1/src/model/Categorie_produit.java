@@ -65,6 +65,10 @@ public class Categorie_produit {
 		this.liste_produits = liste_produits;
 	}
 
+	
+	/**
+	 * to string d'une categorie de produit et de ses produits 
+	 */
 	@Override
 	public String toString() {
 		return "Categorie_produit [id_categorie=" + id_categorie + ", description_categorie=" + description_categorie

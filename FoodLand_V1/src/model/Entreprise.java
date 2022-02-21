@@ -13,14 +13,14 @@ public class Entreprise {
 	/**
 	 * 
 	 */
-	private Integer id_type_entrperise;
+	private Integer id_type_entreprise;
 	/**
 	 * 
 	 */
 	private String siret_entreprise, adresse_entreprise, nom_entreprise, 
 						ville_entreprise, code_postale_entreprise, pays_entreprise, telephone_entreprise, mail_entreprise;
 	/**
-	 * 
+	 * one to many table categorie-entreprise
 	 */
 	private List<Type_entreprise> liste_types_entreprise;
 	
@@ -32,7 +32,7 @@ public class Entreprise {
 			List<Type_entreprise> liste_types_entreprise) {
 		this.id_entreprise = id_entreprise;
 		this.type_entreprise = type_entreprise;
-		this.id_type_entrperise = id_type_entrperise;
+		this.id_type_entreprise = id_type_entrperise;
 		this.siret_entreprise = siret_entreprise;
 		this.adresse_entreprise = adresse_entreprise;
 		this.nom_entreprise = nom_entreprise;
@@ -58,14 +58,18 @@ public class Entreprise {
 
 	public void setType_entreprise(Type_entreprise type_entreprise) {
 		this.type_entreprise = type_entreprise;
+	
+		if(type_entreprise != null) {
+			this.id_type_entreprise = type_entreprise.getId_type_entreprise();
+		}
 	}
 
 	public Integer getId_type_entrperise() {
-		return id_type_entrperise;
+		return id_type_entreprise;
 	}
 
 	public void setId_type_entrperise(Integer id_type_entrperise) {
-		this.id_type_entrperise = id_type_entrperise;
+		this.id_type_entreprise = id_type_entrperise;
 	}
 
 	public String getSiret_entreprise() {

@@ -11,6 +11,7 @@ import model.Utilisateur;
 import outils.HashMe;
 import view.AuthentificationView;
 import view.MainView;
+import view.ManageUtilisateurView;
 
 
 public class ControlUtilisateur {
@@ -19,6 +20,7 @@ public class ControlUtilisateur {
 	private DaoUtilisateur daoUtilisateur;
 	private Utilisateur utilisateur;
 	
+	private ManageUtilisateurView muv;
 	
 	public ControlUtilisateur() {
 		daoUtilisateur = new DaoUtilisateur();
@@ -62,6 +64,9 @@ public class ControlUtilisateur {
 	public void engageMainView(Utilisateur ut) {
 		//
 		MainView mv = new MainView(ut);
+		mv.setVisible(false);
+		ControlMainView cmv = new ControlMainView(ut, mv);
+		
 	}
 	
 	public Utilisateur rechercheUnUtilisateur(Utilisateur ut) {

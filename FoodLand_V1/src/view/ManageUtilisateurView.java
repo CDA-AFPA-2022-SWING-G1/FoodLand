@@ -3,6 +3,8 @@ package view;
 import javax.swing.JFrame;
 import java.awt.FlowLayout;
 import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
+
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,13 +16,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableColumnModelListener;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import Controller.EmpController;
-import model.Emp;
 import model.Utilisateur;
 import serviceMetiers.ControlUtilisateur;
 
@@ -37,6 +38,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.JRadioButton;
+import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ManageUtilisateurView extends JFrame implements ListSelectionListener {
 	
@@ -55,6 +59,7 @@ public class ManageUtilisateurView extends JFrame implements ListSelectionListen
 	
 	private JTable table;
 	private DefaultTableModel dtm;
+	private JTextField textField;
 	
 	public ManageUtilisateurView() {
 
@@ -68,35 +73,35 @@ public class ManageUtilisateurView extends JFrame implements ListSelectionListen
 		desktopPane.setPreferredSize(new Dimension(30, 30));
 		getContentPane().add(desktopPane);
 		
-		JLabel lblMAJ = new JLabel("Panneau gestion personnel");
+		JLabel lblMAJ = new JLabel("Panneau gestion du personnel");
 		lblMAJ.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblMAJ.setBounds(10, 11, 205, 20);
+		lblMAJ.setBounds(10, 11, 234, 20);
 		desktopPane.add(lblMAJ);
 		
-		JLabel lblIdEmp = new JLabel("Identifiant:");
-		lblIdEmp.setBounds(10, 72, 70, 14);
-		desktopPane.add(lblIdEmp);
+		JLabel lblIdUtilisateur = new JLabel("Identifiant:");
+		lblIdUtilisateur.setBounds(10, 162, 70, 14);
+		desktopPane.add(lblIdUtilisateur);
 		
-		JLabel lblNomEmp = new JLabel("Nom:");
-		lblNomEmp.setBounds(10, 100, 70, 14);
-		desktopPane.add(lblNomEmp);
+		JLabel lblNomUtilisateur = new JLabel("Nom:");
+		lblNomUtilisateur.setBounds(10, 190, 70, 14);
+		desktopPane.add(lblNomUtilisateur);
 		
 		JLabel lblPassword = new JLabel("Mot de passe:");
-		lblPassword.setBounds(10, 340, 70, 14);
+		lblPassword.setBounds(10, 433, 70, 14);
 		desktopPane.add(lblPassword);
 		
 		tfIdentifiant = new JTextField();
-		tfIdentifiant.setBounds(110, 69, 63, 20);
+		tfIdentifiant.setBounds(110, 162, 63, 20);
 		desktopPane.add(tfIdentifiant);
 		tfIdentifiant.setColumns(10);
 		
 		tfNom = new JTextField();
-		tfNom.setBounds(110, 97, 134, 20);
+		tfNom.setBounds(110, 187, 134, 20);
 		desktopPane.add(tfNom);
 		tfNom.setColumns(10);
 		
 		tfPassword = new JPasswordField();
-		tfPassword.setBounds(110, 337, 134, 20);
+		tfPassword.setBounds(110, 430, 134, 20);
 		desktopPane.add(tfPassword);
 		tfPassword.setColumns(10);
 		
@@ -104,80 +109,80 @@ public class ManageUtilisateurView extends JFrame implements ListSelectionListen
 		btnMAJ.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				utilisateur = new Utilisateur();
-				utilisateur.set      (Integer.parseInt(tfIdentifiant.getText()));
-				utilisateur.setNomEmp(tfNom.getText());
-				utilisateur.setJobEmp(textFieldJOB.getText());
-				utilisateur.setDateEmbauche(Date.valueOf(textFieldDateEmbauche.getText()));
-				utilisateur.setSalaireEmp(Double.parseDouble(textFieldSalaire.getText()));
-				utilisateur.setCommEmp(Double.parseDouble(textFieldComm.getText()));
-				utilisateur.setNd(Integer.parseInt(textFieldNuDept.getText()));
-				utilisateur.setNeChef(Integer.parseInt(textFieldNEchef.getText()));
-				utilisateur.setMdp(tfPassword.getText());
+				utilisateur.setIdUtilisateur((Integer.parseInt(tfIdentifiant.getText())));
+				utilisateur.setNom_utilisateur((tfNom.getText()));
+				utilisateur.setPrenom_utilisateur(getName());//(textFieldJOB.getText());
+				utilisateur.setAdresse_utilisateur(getName());//(Date.valueOf(textFieldDateEmbauche.getText()));
+				utilisateur.setCode_postale_utilisateur(getName());//(Double.parseDouble(textFieldSalaire.getText()));
+				utilisateur.setVille_utilisateur(getName());//(Double.parseDouble(textFieldComm.getText()));
+				utilisateur.setTel_utilisateur(getName());//(Integer.parseInt(textFieldNuDept.getText()));
+				utilisateur.setMail_utilisateur(getName());//(Integer.parseInt(textFieldNEchef.getText()));
+				utilisateur.setPhoto_utilisateur(null);//(tfPassword.getText());
 				System.out.println(utilisateur.toString());
 				
 				int ret = controlUtilisateur.MAJUnUtilisateur(utilisateur);
 				
 				if(ret == 1) {
-					JOptionPane.showMessageDialog(null, "Mise à jour de l'utilisateur" + utilisateur.getNomEmp() + " effectuée. " + ret );
+					JOptionPane.showMessageDialog(null, "Mise à jour de l'utilisateur" + utilisateur.getNom_utilisateur() + " effectuée. " + ret );
 				}else {
-					JOptionPane.showMessageDialog(null, "Mise à jour de l'utilisateur" + utilisateur.getNomEmp() + " non effectuée. " + ret);
+					JOptionPane.showMessageDialog(null, "Mise à jour de l'utilisateur" + utilisateur.getNom_utilisateur() + " non effectuée. " + ret);
 				}
 			}
 		});
 		btnMAJ.setBounds(347, 429, 70, 23);
 		desktopPane.add(btnMAJ);
 		
-		JLabel lblJob = new JLabel("R\u00F4le:");
-		lblJob.setBounds(10, 125, 46, 14);
-		desktopPane.add(lblJob);
+		JLabel lblRoleUtilisateur = new JLabel("R\u00F4le:");
+		lblRoleUtilisateur.setBounds(10, 252, 46, 14);
+		desktopPane.add(lblRoleUtilisateur);
 		
 		textFieldJOB = new JTextField();
-		textFieldJOB.setBounds(110, 128, 134, 20);
+		textFieldJOB.setBounds(110, 249, 134, 20);
 		desktopPane.add(textFieldJOB);
 		textFieldJOB.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Date embauche:");
-		lblNewLabel.setBounds(10, 163, 86, 14);
-		desktopPane.add(lblNewLabel);
+		JLabel lblprenomUtilisateur = new JLabel("Pr\u00E9nom:");
+		lblprenomUtilisateur.setBounds(10, 222, 86, 14);
+		desktopPane.add(lblprenomUtilisateur);
 		
 		textFieldDateEmbauche = new JTextField();
-		textFieldDateEmbauche.setBounds(110, 159, 134, 20);
+		textFieldDateEmbauche.setBounds(110, 218, 134, 20);
 		desktopPane.add(textFieldDateEmbauche);
 		textFieldDateEmbauche.setColumns(10);
 		
-		JLabel lblSalaire = new JLabel("Salaire:");
-		lblSalaire.setBounds(10, 193, 46, 14);
-		desktopPane.add(lblSalaire);
+		JLabel lblAdresse = new JLabel("Adresse:");
+		lblAdresse.setBounds(10, 283, 46, 14);
+		desktopPane.add(lblAdresse);
 		
-		JLabel lblNewLabel_2 = new JLabel("Commission:");
-		lblNewLabel_2.setBounds(10, 225, 70, 14);
-		desktopPane.add(lblNewLabel_2);
+		JLabel lblCodePostale = new JLabel("Code postale:");
+		lblCodePostale.setBounds(10, 315, 70, 14);
+		desktopPane.add(lblCodePostale);
 		
-		JLabel lblNewLabel_3 = new JLabel("Num\u00E9ro dept:");
-		lblNewLabel_3.setBounds(10, 257, 86, 14);
-		desktopPane.add(lblNewLabel_3);
+		JLabel lblVille = new JLabel("Ville");
+		lblVille.setBounds(10, 347, 86, 14);
+		desktopPane.add(lblVille);
 		
-		JLabel lblNewLabel_4 = new JLabel("Num\u00E9ro chef:");
-		lblNewLabel_4.setBounds(10, 288, 86, 14);
-		desktopPane.add(lblNewLabel_4);
+		JLabel lblTelephone = new JLabel("T\u00E9l\u00E9phone principal:");
+		lblTelephone.setBounds(10, 378, 100, 14);
+		desktopPane.add(lblTelephone);
 		
 		textFieldSalaire = new JTextField();
-		textFieldSalaire.setBounds(110, 190, 134, 20);
+		textFieldSalaire.setBounds(110, 280, 134, 20);
 		desktopPane.add(textFieldSalaire);
 		textFieldSalaire.setColumns(10);
 		
 		textFieldComm = new JTextField();
-		textFieldComm.setBounds(110, 222, 134, 20);
+		textFieldComm.setBounds(110, 312, 38, 20);
 		desktopPane.add(textFieldComm);
 		textFieldComm.setColumns(10);
 		
 		textFieldNuDept = new JTextField();
-		textFieldNuDept.setBounds(110, 254, 38, 20);
+		textFieldNuDept.setBounds(110, 344, 70, 20);
 		desktopPane.add(textFieldNuDept);
 		textFieldNuDept.setColumns(10);
 		
 		textFieldNEchef = new JTextField();
-		textFieldNEchef.setBounds(110, 285, 38, 20);
+		textFieldNEchef.setBounds(110, 375, 38, 20);
 		desktopPane.add(textFieldNEchef);
 		textFieldNEchef.setColumns(10);
 		
@@ -227,7 +232,7 @@ public class ManageUtilisateurView extends JFrame implements ListSelectionListen
 					}
 					
 					//test TableModeleGenericite
-					Iterator<Emp> it2  = empControl.cols().iterator();
+					Iterator<Utilisateur> it2  = empControl.cols().iterator();
 					Vector cols = new Vector<>();
 					while(it.hasNext()) {
 						
@@ -280,6 +285,30 @@ public class ManageUtilisateurView extends JFrame implements ListSelectionListen
 		btnNewButton_2.setBounds(267, 429, 70, 23);
 		desktopPane.add(btnNewButton_2);
 		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(10, 403, 46, 14);
+		desktopPane.add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setBounds(110, 406, 86, 20);
+		desktopPane.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblChargerImage = new JLabel("image");
+		lblChargerImage.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JFileChooser chooser = new JFileChooser(FileSystemView
+				        .getFileSystemView()
+				        .getHomeDirectory());
+				
+				int returnValue = chooser.showOpenDialog(null);
+			}
+		});
+		lblChargerImage.setIcon(null);
+		lblChargerImage.setBounds(10, 42, 106, 106);
+		desktopPane.add(lblChargerImage);
+		
 		// gestion des selections sur le tableau
 		ListSelectionModel listSelectionModel = table.getSelectionModel();
 		listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -301,7 +330,7 @@ public class ManageUtilisateurView extends JFrame implements ListSelectionListen
 		tfPassword.setText("");
 	}
 	
-	public void populateJTextField(Emp emp) {
+	public void populateJTextField(Utilisateur ut) {
 		tfIdentifiant.setText(String.valueOf(emp.getIdEmp()));
 		tfNom.setText(emp.getNomEmp());
 		textFieldJOB.setText(emp.getJobEmp());
@@ -318,7 +347,7 @@ public class ManageUtilisateurView extends JFrame implements ListSelectionListen
 	public void valueChanged(ListSelectionEvent e) {
 		// TODO Auto-generated method stub
 		int[] sel;
-		utilisateur = new Emp();
+		utilisateur = new Utilisateur();
 		sel = table.getSelectedRows();
 		
 		int cols = table.getColumnCount();
@@ -331,15 +360,19 @@ public class ManageUtilisateurView extends JFrame implements ListSelectionListen
 		}
 		
 		// fill Emp	and populate textFields	
-		utilisateur.setIdEmp((int) dtm.getValueAt(sel[0], 0));
-		utilisateur.setNomEmp((String) dtm.getValueAt(sel[0], 1));
-		utilisateur.setJobEmp((String) dtm.getValueAt(sel[0], 2));
-		utilisateur.setDateEmbauche((java.util.Date) dtm.getValueAt(sel[0], 3));
-		utilisateur.setSalaireEmp((double) dtm.getValueAt(sel[0], 4));
-		utilisateur.setCommEmp((double) dtm.getValueAt(sel[0], 5));
-		utilisateur.setNd((int) dtm.getValueAt(sel[0], 6));
-		utilisateur.setNeChef((int) dtm.getValueAt(sel[0], 7));
+		utilisateur.setIdUtilisateur((int) dtm.getValueAt(sel[0], 0));
+		utilisateur.setNom_utilisateur((String) dtm.getValueAt(sel[0], 1));
+		utilisateur.setPrenom_utilisateur((String) dtm.getValueAt(sel[0], 2));
+		utilisateur.setAdresse_utilisateur((String) dtm.getValueAt(sel[0], 3));
+		utilisateur.setCode_postale_utilisateur((String) dtm.getValueAt(sel[0], 4));
+		utilisateur.setVille_utilisateur((String) dtm.getValueAt(sel[0], 5));
+		utilisateur.setTel_utilisateur((String) dtm.getValueAt(sel[0], 6));
+		utilisateur.setMail_utilisateur( (String) dtm.getValueAt(sel[0], 7));
+		utilisateur.setFk_id_role((Integer) dtm.getValueAt(sel[0], 8));
+		utilisateur.setPhoto_utilisateur((byte[]) dtm.getValueAt(sel[0], 9));
+		utilisateur.setFk_id_compte((Integer) dtm.getValueAt(sel[0], 10));
 		System.out.println("emp: " + utilisateur.toString());
+		
 		populateJTextField(utilisateur);
 		
 		
@@ -534,6 +567,7 @@ class TableModeleGenericite<T> extends AbstractTableModel implements ListSelecti
 		// TODO Auto-generated method stub
 		
 	}
+	
 	
 }
 

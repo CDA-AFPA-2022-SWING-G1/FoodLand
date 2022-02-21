@@ -21,10 +21,15 @@ public class Produit {
 	private float poids_quantite;
 	private float prix_unitaire_produit;
 	
+	
 	/**
 	 * relation many to one avec categorie
 	 */
 	private Categorie_produit categorie;
+	/**
+	 * foreign key id categorie
+	 */
+	private Integer fk_id_categorie;
 	
 	public Produit() {
 	}
@@ -95,6 +100,18 @@ public class Produit {
 
 	public void setCategorie(Categorie_produit categorie) {
 		this.categorie = categorie;
+		
+		if(categorie != null) {
+			this.fk_id_categorie = categorie.getId_categorie();
+		}
+	}
+	
+	public Integer getFk_id_categorie() {
+		return fk_id_categorie;
+	}
+
+	public void setFk_id_categorie(Integer fk_id_categorie) {
+		this.fk_id_categorie = fk_id_categorie;
 	}
 
 	@Override

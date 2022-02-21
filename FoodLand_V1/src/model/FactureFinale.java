@@ -14,6 +14,10 @@ public class FactureFinale extends BonCommande {
 	/**
 	 * 
 	 */
+	private Integer id_facture;
+	/**
+	 * 
+	 */
 	private Date date_creation_facture;
 	/**
 	 * 
@@ -27,6 +31,81 @@ public class FactureFinale extends BonCommande {
 	 * 
 	 */
 	private Integer id_type_facture;
+	/**
+	 * 
+	 */
+	private Integer id_bonCommande;
+	/**
+	 * 
+	 */
+	private BonCommande commande;
+	
+	public FactureFinale() {}
+
+	public Integer getId_facture() {
+		return id_facture;
+	}
+
+	public void setId_facture(Integer id_facture) {
+		this.id_facture = id_facture;
+	}
+
+	public Date getDate_creation_facture() {
+		return date_creation_facture;
+	}
+
+	public void setDate_creation_facture(Date date_creation_facture) {
+		this.date_creation_facture = date_creation_facture;
+	}
+
+	public float getTva_facture() {
+		return tva_facture;
+	}
+
+	public void setTva_facture(float tva_facture) {
+		this.tva_facture = tva_facture;
+	}
+
+	public Type_facture getType_facture() {
+		return type_facture;
+	}
+
+	public void setType_facture(Type_facture type_facture) {
+		this.type_facture = type_facture;
+		
+		if(type_facture != null) {
+			this.id_type_facture = type_facture.getId_type_facture();
+		}
+	}
+
+	public Integer getId_type_facture() {
+		return id_type_facture;
+	}
+
+	public void setId_type_facture(Integer id_type_facture) {
+		this.id_type_facture = id_type_facture;
+	}
+
+	public Integer getId_bonCommande() {
+		return id_bonCommande;
+	}
+
+	public void setId_bonCommande(Integer id_bonCommande) {
+		this.id_bonCommande = id_bonCommande;
+	}
+
+	public BonCommande getCommande() {
+		return commande;
+	}
+
+	public void setCommande(BonCommande commande) {
+		this.commande = commande;
+		
+		if(commande != null) {
+			this.id_bonCommande = commande.getId_bonCommande();
+		}
+	}
+	
 	
 
 }

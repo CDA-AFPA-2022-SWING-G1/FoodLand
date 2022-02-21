@@ -1,7 +1,9 @@
 package tests;
 
+import model.Utilisateur;
 import outils.HashMe;
 import outils.ValidationPatternsRegex;
+import serviceMetiers.ControlMainView;
 import view.MainView;
 
 public class Tests {
@@ -19,7 +21,11 @@ public class Tests {
 		
 		System.out.println(hashe);
 		
-		//MainView mv = new MainView();
+		Utilisateur ut = null;
+		MainView mv = new MainView(ut);
+		ControlMainView cmv = new ControlMainView(ut, mv);
+		cmv.authorizedMenusRole();
+		
 		
 		// test match email OK
 		String email = "totoa@lpraline";

@@ -12,10 +12,6 @@ import java.util.List;
  */
 public class Categorie_entreprise {
 	/**
-	 * relation one to many permet de retrouver tout les 
-	 */
-	public List<Produit> liste_produits;
-	/**
 	 * 
 	 */
 	private int id_categorie;
@@ -23,6 +19,39 @@ public class Categorie_entreprise {
 	 * 
 	 */
 	private String nom_categorie;
+	/**
+	 * relation one to many permet de retrouver tout les tuples d'une entreprise et ses catégories
+	 * équivalent de la Liste<type_entreprise> présente dans l'entité Entreprise, voir ce qui est mieux à l'usage 
+	 */
+	public List<Produit> liste_produits;
+	
+	
+	public Categorie_entreprise() {}
 
+	public List<Produit> getListe_produits() {
+		return liste_produits;
+	}
 
+	public void setListe_produits(List<Produit> liste_produits) {
+		this.liste_produits = liste_produits;
+	}
+
+	public int getId_categorie() {
+		return id_categorie;
+	}
+
+	public void setId_categorie(int id_categorie) {
+		this.id_categorie = id_categorie;
+	}
+
+	public String getNom_categorie() {
+		return nom_categorie;
+	}
+
+	public void setNom_categorie(String nom_categorie) {
+		this.nom_categorie = nom_categorie;
+	}
+	
+	
+	
 }

@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.MenuBar;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -30,6 +31,7 @@ import com.toedter.calendar.JDateChooser;
 import model.Role;
 import model.Utilisateur;
 import outils.DateListener;
+import serviceMetiers.ControlUtilisateur;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -53,14 +55,14 @@ public class MainView extends JFrame {
 	private JInternalFrame internalPanneauVentes;
 	private JInternalFrame internaPanneauPersonnel;
 	private JMenuBar menuBar;
-	private JMenuItem itemVentesJours;
-	private JMenuItem mntmNewMenuItem;
-	private JMenuItem mntmNewMenuItem_1;
-	private JMenuItem mntmNewMenuItem_3;
-	private JMenuItem mntmNewMenuItem_4;
+	private JMenuItem itemSaveVentesJours;
+	private JMenuItem unMenuItem;
+	private JMenuItem unAutreMenu;
+	private JMenuItem menuItemPanneauVentes;
+	private JMenuItem menuItemHistoriqueVentes;
 	private JMenuItem MenuItemGestionVentes;
 	private JMenuItem menuItemGestionStock;
-	private JMenuItem mntmNewMenuItem_2;
+	private JMenuItem menuItemGestionDuPersonnel;
 
 	/**
 	 * Launch the application.
@@ -94,17 +96,17 @@ public class MainView extends JFrame {
 		menuFichiers = new JMenu("Fichier");
 		menuBar.add(menuFichiers);
 		
-		itemVentesJours = new JMenuItem("Sauvegarder les ventes du jour");
-		menuFichiers.add(itemVentesJours);
+		itemSaveVentesJours = new JMenuItem("Sauvegarder les ventes du jour");
+		menuFichiers.add(itemSaveVentesJours);
 		
 		menuEdition = new JMenu("Edition");
 		menuBar.add(menuEdition);
 		
-		mntmNewMenuItem = new JMenuItem("un menu");
-		menuEdition.add(mntmNewMenuItem);
+		unMenuItem = new JMenuItem("un menu");
+		menuEdition.add(unMenuItem);
 		
-		mntmNewMenuItem_1 = new JMenuItem("un autre menu");
-		menuEdition.add(mntmNewMenuItem_1);
+		unAutreMenu = new JMenuItem("un autre menu");
+		menuEdition.add(unAutreMenu);
 		
 		menuVentes = new JMenu(" Ventes");
 		menuBar.add(menuVentes);
@@ -144,8 +146,8 @@ public class MainView extends JFrame {
 		
 		
 		
-		mntmNewMenuItem_3 = new JMenuItem("Panneau des ventes");
-		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+		menuItemPanneauVentes = new JMenuItem("Panneau des ventes");
+		menuItemPanneauVentes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				internalPanneauVentes.setVisible(true);
 				it = new InternalTest();
@@ -153,10 +155,10 @@ public class MainView extends JFrame {
 				
 			}
 		});
-		menuVentes.add(mntmNewMenuItem_3);
+		menuVentes.add(menuItemPanneauVentes);
 		
-		mntmNewMenuItem_4 = new JMenuItem("Consulter les historiques des ventes");
-		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+		menuItemHistoriqueVentes = new JMenuItem("Consulter les historiques des ventes");
+		menuItemHistoriqueVentes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				it = new InternalTest();
@@ -165,7 +167,7 @@ public class MainView extends JFrame {
 				
 			}
 		});
-		menuVentes.add(mntmNewMenuItem_4);
+		menuVentes.add(menuItemHistoriqueVentes);
 		
 		menuGestion = new JMenu("Gestion");
 		menuBar.add(menuGestion);
@@ -176,8 +178,18 @@ public class MainView extends JFrame {
 		menuItemGestionStock = new JMenuItem("Gestion du stock");
 		menuGestion.add(menuItemGestionStock);
 		
-		mntmNewMenuItem_2 = new JMenuItem("Gestion du personnel");
-		menuGestion.add(mntmNewMenuItem_2);
+		menuItemGestionDuPersonnel = new JMenuItem("Gestion du personnel");
+		menuItemGestionDuPersonnel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				// model
+				Utilisateur ut = new Utilisateur();
+				ManageUtilisateurView muv = new ManageUtilisateurView();
+				//ControlUtilisateur cut = new ControlUtilisateur(ut, muv);
+				
+			}
+		});
+		menuGestion.add(menuItemGestionDuPersonnel);
 		contentPane = new JPanel();
 		contentPane.setPreferredSize(new Dimension(800, 600));
 		contentPane.setSize(new Dimension(800, 600));
@@ -191,7 +203,7 @@ public class MainView extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(internalPanneauVentes);
 		internalPanneauVentes.getContentPane().setLayout(null);
-		menuEdition.setVisible(false);
+		menuEdition.setVisible(true);
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBounds(0, 0, 408, 95);
 		internalPanneauVentes.getContentPane().add(desktopPane);
@@ -217,35 +229,155 @@ public class MainView extends JFrame {
 			}
 		});
 	}
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+
+	public JDateChooser getDateChooser() {
+		return dateChooser;
+	}
+
+	public void setDateChooser(JDateChooser dateChooser) {
+		this.dateChooser = dateChooser;
+	}
+
+	public InternalTest getIt() {
+		return it;
+	}
+
+	public void setIt(InternalTest it) {
+		this.it = it;
+	}
+
+	public static Utilisateur getUtil() {
+		return util;
+	}
+
+	public static void setUtil(Utilisateur util) {
+		MainView.util = util;
+	}
+
+	public JMenu getMenuFichiers() {
+		return menuFichiers;
+	}
+
+	public void setMenuFichiers(JMenu menuFichiers) {
+		this.menuFichiers = menuFichiers;
+	}
+
+	public JMenu getMenuEdition() {
+		return menuEdition;
+	}
+
+	public void setMenuEdition(JMenu menuEdition) {
+		this.menuEdition = menuEdition;
+	}
+
+	public JMenu getMenuVentes() {
+		return menuVentes;
+	}
+
+	public void setMenuVentes(JMenu menuVentes) {
+		this.menuVentes = menuVentes;
+	}
+
+	public JMenu getMenuGestion() {
+		return menuGestion;
+	}
+
+	public void setMenuGestion(JMenu menuGestion) {
+		this.menuGestion = menuGestion;
+	}
+
+	public JInternalFrame getInternalPanneauVentes() {
+		return internalPanneauVentes;
+	}
+
+	public void setInternalPanneauVentes(JInternalFrame internalPanneauVentes) {
+		this.internalPanneauVentes = internalPanneauVentes;
+	}
+
+	public JInternalFrame getInternaPanneauPersonnel() {
+		return internaPanneauPersonnel;
+	}
+
+	public void setInternaPanneauPersonnel(JInternalFrame internaPanneauPersonnel) {
+		this.internaPanneauPersonnel = internaPanneauPersonnel;
+	}
+
+	public void setMenuBar(JMenuBar menuBar) {
+		this.menuBar = menuBar;
+	}
+
+	public JMenuItem getItemSaveVentesJours() {
+		return itemSaveVentesJours;
+	}
+
+	public void setItemSaveVentesJours(JMenuItem itemSaveVentesJours) {
+		this.itemSaveVentesJours = itemSaveVentesJours;
+	}
+
+	public JMenuItem getUnMenuItem() {
+		return unMenuItem;
+	}
+
+	public void setUnMenuItem(JMenuItem unMenuItem) {
+		this.unMenuItem = unMenuItem;
+	}
+
+	public JMenuItem getUnAutreMenu() {
+		return unAutreMenu;
+	}
+
+	public void setUnAutreMenu(JMenuItem unAutreMenu) {
+		this.unAutreMenu = unAutreMenu;
+	}
+
+	public JMenuItem getMenuItemPanneauVentes() {
+		return menuItemPanneauVentes;
+	}
+
+	public void setMenuItemPanneauVentes(JMenuItem menuItemPanneauVentes) {
+		this.menuItemPanneauVentes = menuItemPanneauVentes;
+	}
+
+	public JMenuItem getMenuItemHistoriqueVentes() {
+		return menuItemHistoriqueVentes;
+	}
+
+	public void setMenuItemHistoriqueVentes(JMenuItem menuItemHistoriqueVentes) {
+		this.menuItemHistoriqueVentes = menuItemHistoriqueVentes;
+	}
+
+	public JMenuItem getMenuItemGestionVentes() {
+		return MenuItemGestionVentes;
+	}
+
+	public void setMenuItemGestionVentes(JMenuItem menuItemGestionVentes) {
+		MenuItemGestionVentes = menuItemGestionVentes;
+	}
+
+	public JMenuItem getMenuItemGestionStock() {
+		return menuItemGestionStock;
+	}
+
+	public void setMenuItemGestionStock(JMenuItem menuItemGestionStock) {
+		this.menuItemGestionStock = menuItemGestionStock;
+	}
+
+	public JMenuItem getMenuItemGestionDuPersonnel() {
+		return menuItemGestionDuPersonnel;
+	}
+
+	public void setMenuItemGestionDuPersonnel(JMenuItem menuItemGestionDuPersonnel) {
+		this.menuItemGestionDuPersonnel = menuItemGestionDuPersonnel;
+	}
 	
 	
-	private void autorisation() {
-		List<Role> roles = util.getListe_Roles();
-		
-		for(Role r : roles) {
-			String role = r.getLibelle_role();
-			switch (role) {
-			
-			case "ADMIN": 
-				
-				break;
-				
-			case "ACHETEUR":
-				
-				break;
-				
-			case "VENDEUR":
-				
-				break;
-				
-			case "GERANT":
-				
-				break;
-				
-				default:
-		}
-		
-	}
-		
-	}
+	
 }

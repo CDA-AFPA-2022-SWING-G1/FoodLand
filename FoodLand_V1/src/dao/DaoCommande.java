@@ -39,6 +39,16 @@ public class DaoCommande implements Dao<BonCommande> {
 	@Override
 	public BonCommande read(BonCommande t) {
 		// TODO Auto-generated method stub
+		t.getFk_id_commande();
+		//if null
+		//alors
+		Integer tt = t.getFk_id_entreprise(); 
+		String colidentreprise = "fk_id_entreprise";
+		
+		String r= "SELECT * FROM commande where " + colidentreprise + "=" + tt + ";";
+		
+		// ou jointure
+		
 		return null;
 	}
 

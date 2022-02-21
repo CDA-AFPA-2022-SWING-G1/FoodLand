@@ -13,21 +13,65 @@ import java.util.List;
 public class Utilisateur {
 
 	private Integer idUtilisateur;
-	private String nom_utilisateur, prenom_utilisateur;
-	private List<Adresse> list_Addresse;
-	private List<Role> liste_Roles;
-	
+	private String nom_utilisateur, prenom_utilisateur, adresse_utilisateur, code_postale_utilisateur,
+						ville_utilisateur, tel_utilisateur, mail_utilisateur;
+	private byte[] photo_utilisateur;
 	private String mdp;
+	//private List<Adresse> list_Addresse;
 	
+//	/**
+//	 * one to many liste des rôles de l'utilisateur
+//	 */
+//	private List<Role> liste_Roles;
+	
+	/**
+	 * relation one to one bidirectionnel et unique avec compte
+	 */
+	private Integer fk_id_compte;
+	private Compte compte_utilisateur;
+	/**
+	 * relation one to one bidirectionnel et unique avec role
+	 */
+	private Integer fk_id_role;
+	private Role role_utilisateur;
 	
 	public Utilisateur() {}
 
-	public Utilisateur(Integer idUtilisateur, List<Adresse> list_Addresse, List<Role> liste_Roles, String mdp) {
+	public Utilisateur(Integer idUtilisateur, String nom_utilisateur, String prenom_utilisateur, String tel_utilisateur,
+			String mail_utilisateur, String mdp, Integer fk_id_compte, Compte compte_utilisateur, Integer fk_id_role, Role role_utilisateur) { // List<Role> liste_Roles,
 		super();
 		this.idUtilisateur = idUtilisateur;
-		this.list_Addresse = list_Addresse;
-		this.liste_Roles = liste_Roles;
+		this.nom_utilisateur = nom_utilisateur;
+		this.prenom_utilisateur = prenom_utilisateur;
+		this.tel_utilisateur = tel_utilisateur;
+		this.mail_utilisateur = mail_utilisateur;
 		this.mdp = mdp;
+		//this.liste_Roles = liste_Roles;
+		this.fk_id_compte = fk_id_compte;
+		this.compte_utilisateur = compte_utilisateur;
+		this.fk_id_role = fk_id_compte;
+		this.role_utilisateur = role_utilisateur;
+	}
+
+	public Utilisateur(Integer idUtilisateur, String nom_utilisateur, String prenom_utilisateur,
+			String adresse_utilisateur, String code_postale_utilisateur, String ville_utilisateur,
+			String tel_utilisateur, String mail_utilisateur, byte[] photo_utilisateur, String mdp, Integer fk_id_compte,
+			Compte compte_utilisateur, Integer fk_id_role, Role role_utilisateur) {
+		super();
+		this.idUtilisateur = idUtilisateur;
+		this.nom_utilisateur = nom_utilisateur;
+		this.prenom_utilisateur = prenom_utilisateur;
+		this.adresse_utilisateur = adresse_utilisateur;
+		this.code_postale_utilisateur = code_postale_utilisateur;
+		this.ville_utilisateur = ville_utilisateur;
+		this.tel_utilisateur = tel_utilisateur;
+		this.mail_utilisateur = mail_utilisateur;
+		this.photo_utilisateur = photo_utilisateur;
+		this.mdp = mdp;
+		this.fk_id_compte = fk_id_compte;
+		this.compte_utilisateur = compte_utilisateur;
+		this.fk_id_role = fk_id_role;
+		this.role_utilisateur = role_utilisateur;
 	}
 
 	public Integer getIdUtilisateur() {
@@ -54,21 +98,21 @@ public class Utilisateur {
 		this.prenom_utilisateur = prenom_utilisateur;
 	}
 
-	public List<Adresse> getList_Addresse() {
-		return list_Addresse;
-	}
+//	public List<Adresse> getList_Addresse() {
+//		return list_Addresse;
+//	}
+//
+//	public void setList_Addresse(List<Adresse> list_Addresse) {
+//		this.list_Addresse = list_Addresse;
+//	}
 
-	public void setList_Addresse(List<Adresse> list_Addresse) {
-		this.list_Addresse = list_Addresse;
-	}
-
-	public List<Role> getListe_Roles() {
-		return liste_Roles;
-	}
-
-	public void setListe_Roles(List<Role> liste_Roles) {
-		this.liste_Roles = liste_Roles;
-	}
+//	public List<Role> getListe_Roles() {
+//		return liste_Roles;
+//	}
+//
+//	public void setListe_Roles(List<Role> liste_Roles) {
+//		this.liste_Roles = liste_Roles;
+//	}
 
 	public String getMdp() {
 		return mdp;
@@ -77,9 +121,87 @@ public class Utilisateur {
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
 	}
-	
-	
-	
-	
 
+	public Integer getFk_id_compte() {
+		return fk_id_compte;
+	}
+
+	public void setFk_id_compte(Integer fk_id_compte) {
+		this.fk_id_compte = fk_id_compte;
+	}
+	
+	public Integer getFk_id_role() {
+		return fk_id_role;
+	}
+
+	public void setFk_id_role(Integer fk_id_role) {
+		this.fk_id_role = fk_id_role;
+	}
+
+	public String getAdresse_utilisateur() {
+		return adresse_utilisateur;
+	}
+
+	public void setAdresse_utilisateur(String adresse_utilisateur) {
+		this.adresse_utilisateur = adresse_utilisateur;
+	}
+
+	public String getCode_postale_utilisateur() {
+		return code_postale_utilisateur;
+	}
+
+	public void setCode_postale_utilisateur(String code_postale_utilisateur) {
+		this.code_postale_utilisateur = code_postale_utilisateur;
+	}
+
+	public String getVille_utilisateur() {
+		return ville_utilisateur;
+	}
+
+	public void setVille_utilisateur(String ville_utilisateur) {
+		this.ville_utilisateur = ville_utilisateur;
+	}
+
+	public String getTel_utilisateur() {
+		return tel_utilisateur;
+	}
+
+	public void setTel_utilisateur(String tel_utilisateur) {
+		this.tel_utilisateur = tel_utilisateur;
+	}
+
+	public String getMail_utilisateur() {
+		return mail_utilisateur;
+	}
+
+	public void setMail_utilisateur(String mail_utilisateur) {
+		this.mail_utilisateur = mail_utilisateur;
+	}
+
+	public byte[] getPhoto_utilisateur() {
+		return photo_utilisateur;
+	}
+
+	public void setPhoto_utilisateur(byte[] photo_utilisateur) {
+		this.photo_utilisateur = photo_utilisateur;
+	}
+
+	public Compte getCompte_utilisateur() {
+		return compte_utilisateur;
+	}
+
+	public void setCompte_utilisateur(Compte compte_utilisateur) {
+		this.compte_utilisateur = compte_utilisateur;
+	}
+
+	public Role getRole_utilisateur() {
+		return role_utilisateur;
+	}
+
+	public void setRole_utilisateur(Role role_utilisateur) {
+		this.role_utilisateur = role_utilisateur;
+	}
+	
+	
+	
 }
