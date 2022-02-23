@@ -4,6 +4,7 @@
 
 package model;
 
+import java.util.Arrays;
 import java.util.List;
 
 /************************************************************/
@@ -200,6 +201,16 @@ public class Utilisateur {
 
 	public void setRole_utilisateur(Role role_utilisateur) {
 		this.role_utilisateur = role_utilisateur;
+	}
+
+	@Override
+	public String toString() {
+		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", nom_utilisateur=" + nom_utilisateur
+				+ ", prenom_utilisateur=" + prenom_utilisateur + ", adresse_utilisateur=" + adresse_utilisateur
+				+ ", code_postale_utilisateur=" + code_postale_utilisateur + ", ville_utilisateur=" + ville_utilisateur
+				+ ", tel_utilisateur=" + tel_utilisateur + ", mail_utilisateur=" + mail_utilisateur
+				+ ", photo_utilisateur=" + Arrays.toString(photo_utilisateur) + ", mdp=" + mdp + ", fk_id_role="
+				+ fk_id_role + "]";
 	}
 	
 	
