@@ -6,7 +6,11 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
+import dao.DaoCompte;
+import dao.DaoRole;
 import dao.DaoUtilisateur;
+import model.Compte;
+import model.Role;
 import model.Utilisateur;
 import outils.HashMe;
 import view.AuthentificationView;
@@ -19,6 +23,12 @@ public class ControlUtilisateur {
 	
 	private DaoUtilisateur daoUtilisateur;
 	private Utilisateur utilisateur;
+	
+	private DaoRole daoRole;
+	private Role role;
+	
+	private DaoCompte daoCompte;
+	private Compte compte;
 	
 	private ManageUtilisateurView muv;
 	
@@ -47,6 +57,7 @@ public class ControlUtilisateur {
 			
 			this.setUtilisateur(utilisateur);
 			return true;
+			
 		}else{
 			return false;
 		}
@@ -61,6 +72,7 @@ public class ControlUtilisateur {
 	}
 	
 	
+	// déplacer vers controlMainView ou control de la frame aux boutons lançant les panneaux
 	public void engageMainView(Utilisateur ut) {
 		//
 		MainView mv = new MainView(ut);
@@ -82,6 +94,7 @@ public class ControlUtilisateur {
 
 	public int enregistrerUnUtilisateur(Utilisateur ut) {
 		int ret = daoUtilisateur.create(ut);
+		// role & compte
 		return ret;
 	}
 
@@ -95,10 +108,26 @@ public class ControlUtilisateur {
 		return liste;
 	}
 	
+	public ArrayList cols() {
+		ArrayList<String> liste = (ArrayList<String>) daoUtilisateur.listeColumns();
+		System.out.println(liste.toString());
+		return liste;
+	}
 	
 	public DefaultTableModel getModelTable() {
-		Vector cols = DaoUtilisateur.listeColumns();
+		//Vector cols = cols();
 		DefaultTableModel dtm = new  DefaultTableModel();
+		
+		for(int i = 0; i <  cols().size(); i++) {
+			String s = (String) cols().get(i);
+			dtm.addColumn(s);
+		}
 		return dtm;
+	}
+	
+	public ArrayList<Role> populateRoleComboBox() {
+		daoRole = new DaoRole();
+		ArrayList<Role> listeRoles = (ArrayList<Role>) daoRole.readAll();
+		return listeRoles;
 	}
 }

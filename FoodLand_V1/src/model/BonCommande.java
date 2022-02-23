@@ -7,6 +7,7 @@ package model;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /************************************************************/
 /**
@@ -21,7 +22,10 @@ public class BonCommande {
 	 * dates
 	 */
 	private Date date_creation_commande, date_preparation_commande, date_retrait_commande;
-
+	/**
+	 * accepter_ou_refuser_commande
+	 */
+	private boolean accepter_ou_refuser_commande; 
 	/**
 	 * relation one to many table lignecommandes
 	 */
@@ -36,12 +40,19 @@ public class BonCommande {
 	/**
 	 *  
 	 */
-	private Type_commande type_commande; // acheteur 
+	private Type_commande type_commande; // 
 	private Integer fk_id_commande;
 	/**
 	 * relation one to many 
 	 */
 	private List<Utilisateur> utilisateurs;  // delivreur // preparateur // commercial
+	// ou pour palier au problème de conception en bdd. Le probleme est, comment être sur d'identifier 
+	// le bon intervenant sur la commande par son nom, la conception aurait été :
+	// 1 par l'identifiant
+	// 2 en créant une table en relation de N intervenants(commercial, préparateur..etc) à 1 commande
+	
+	//  solution avec une Map lier un utilisateur et son role à la commande 
+	private Map<Utilisateur, Role> liste_intervenants;
 	
 	public BonCommande() {}
 	

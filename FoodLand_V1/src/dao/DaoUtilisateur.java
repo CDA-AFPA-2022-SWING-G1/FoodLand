@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Vector;
 
 import model.Categorie_produit;
-import model.Emp;
 import model.Utilisateur;
 import outils.ConnectionDB;
 
@@ -82,7 +81,7 @@ public class DaoUtilisateur implements Dao<Utilisateur> {
 				t.setTel_utilisateur(rs.getString("tel_user"));
 				t.setMail_utilisateur(rs.getString("mail_user"));
 				t.setFk_id_role(rs.getInt("fk_id_role"));
-				t.setPhoto_utilisateur(rs.getBlob("photo_user"));
+				t.setPhoto_utilisateur(rs.getBytes("photo_user"));
 				t.setFk_id_compte(rs.getInt("fk_compte_user"));
 			}
 			
@@ -169,7 +168,7 @@ public class DaoUtilisateur implements Dao<Utilisateur> {
 				t.setTel_utilisateur(rs.getString("tel_user"));
 				t.setMail_utilisateur(rs.getString("mail_user"));
 				t.setFk_id_role(rs.getInt("fk_id_role"));
-				t.setPhoto_utilisateur(rs.getBlob("photo_user"));
+				t.setPhoto_utilisateur(rs.getBytes("photo_user"));
 				t.setFk_id_compte(rs.getInt("fk_compte_user"));
 				
 				//System.out.println(utilisateur.toString());

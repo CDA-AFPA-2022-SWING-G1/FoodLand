@@ -45,7 +45,7 @@ public class MainView extends JFrame {
 	private JPanel contentPane;
 	private JDateChooser dateChooser;
 	
-	private InternalTest it;
+	private InternalPanneauCommande it;
 	
 	private static Utilisateur util;
 	private JMenu menuFichiers;
@@ -150,7 +150,7 @@ public class MainView extends JFrame {
 		menuItemPanneauVentes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				internalPanneauVentes.setVisible(true);
-				it = new InternalTest();
+				it = new InternalPanneauCommande();
 				it.setVisible(true);
 				
 			}
@@ -161,7 +161,7 @@ public class MainView extends JFrame {
 		menuItemHistoriqueVentes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				it = new InternalTest();
+				it = new InternalPanneauCommande();
 				it.setVisible(true);
 				contentPane.add(it);
 				
@@ -246,11 +246,11 @@ public class MainView extends JFrame {
 		this.dateChooser = dateChooser;
 	}
 
-	public InternalTest getIt() {
+	public InternalPanneauCommande getIt() {
 		return it;
 	}
 
-	public void setIt(InternalTest it) {
+	public void setIt(InternalPanneauCommande it) {
 		this.it = it;
 	}
 

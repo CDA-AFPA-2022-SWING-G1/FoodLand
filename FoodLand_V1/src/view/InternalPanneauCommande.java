@@ -7,12 +7,12 @@ import java.awt.Dimension;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
-public class InternalTest extends JInternalFrame {
+public class InternalPanneauCommande extends JInternalFrame {
 
 	/**
 	 * Create the frame.
 	 */
-	public InternalTest() {
+	public InternalPanneauCommande() {
 		
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override

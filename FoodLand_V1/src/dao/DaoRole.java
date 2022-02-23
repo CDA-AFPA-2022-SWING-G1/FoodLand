@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -37,7 +38,7 @@ public class DaoRole implements Dao<Role> {
 	@Override
 	public int create(Role t) {
 		int res = 0;
-		String insert = "INSERT INTO role (lib_role) VALUES ("
+		String insert = "INSERT INTO roles (lib_role) VALUES ("
 				//+ "'" + t.getId_role() + "', "
 				+ "'" + t.getLibelle_role() + "'"
 				+ ");";
@@ -58,7 +59,7 @@ public class DaoRole implements Dao<Role> {
 	public Role read(Role t) {
 		try {
 			stmt = c.createStatement();
-			String read = "SELECT * FROM role WHERE id_role =" + t.getId_role();
+			String read = "SELECT * FROM roles WHERE id_role =" + t.getId_role();
 			rs = stmt.executeQuery(read);
 			
 			while(rs.next()) {
@@ -88,7 +89,7 @@ public class DaoRole implements Dao<Role> {
 			System.out.println(c.toString());
 			stmt = c.createStatement();
 			
-			String update = "UPDATE role SET " 
+			String update = "UPDATE roles SET " 
 					//+ "id_role= '" + t.getId_role()+ "', "
 					+ "lib_role= '" + t.getLibelle_role() + "'"
 					+ "WHERE id_role = " + t.getId_role() + "";
@@ -110,7 +111,7 @@ public class DaoRole implements Dao<Role> {
 		int r = 0;
 		try {
 			stmt = c.createStatement();
-			String delete = "DELETE FROM role WHERE id_role = "  
+			String delete = "DELETE FROM roles WHERE id_role = "  
 							+ "'" + t.getId_role() + "'" 
 								+ " AND lib_role = " + "'" + t.getLibelle_role() + "'" + ";";
 			System.out.println(delete);
@@ -125,10 +126,10 @@ public class DaoRole implements Dao<Role> {
 
 	@Override
 	public List<Role> readAll() {
-		Vector<Role> list = new Vector<>();
+		ArrayList<Role> list = new ArrayList<>();
 		try {
 			stmt = c.createStatement();
-			String select = "SELECT * FROM role;";
+			String select = "SELECT * FROM roles;";
 			rs = stmt.executeQuery(select);
 			
 			while(rs.next()) {

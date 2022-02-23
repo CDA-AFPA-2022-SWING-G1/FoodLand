@@ -9,7 +9,7 @@ public class ConnectionDB {
 
 	private static final String JDBC_DRIVER_MYSL = "com.mysql.jdbc.Driver";
 	
-	private static final String DB_URL = "jdbc:mysql://localhost/foodLand";
+	private static final String DB_URL = "jdbc:mysql://localhost/foodLand2";
 	private static final String USER = "root";
 	private static final String PASS = "";
 	
