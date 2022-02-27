@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import java.awt.event.MouseAdapter;
 import java.sql.ResultSet;
@@ -67,7 +67,7 @@ public class Liste_des_commandes_a_delivrerView {
 	      panel.add(pane);
 	      f.add(panel);
 	      f.setSize(500, 400);
-	      f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	      f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	      f.setVisible(true);
 	   
 	      res.close();

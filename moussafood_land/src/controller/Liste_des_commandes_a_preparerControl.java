@@ -5,13 +5,14 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import View.Liste_des_commandes_a_preparerView;
+
 import connexion.DBConnexion;
+import view.Liste_des_commandes_a_preparerView;
 
 public class Liste_des_commandes_a_preparerControl {
 
 	String query;
-	/*récuperation de l'objet connexion du package DBconnexion*/
+	/*rï¿½cuperation de l'objet connexion du package DBconnexion*/
 	Connection cn=  new DBConnexion().connect();
 
 	

@@ -1,12 +1,10 @@
 package main;
 
-import View.Authentification;
+import view.Authentification;
 
 public class Main {
 	public static void main(String[] args)
-    {
-       
-	 new Authentification();
-    }
-
+	{
+		new Authentification();
+	}
 }

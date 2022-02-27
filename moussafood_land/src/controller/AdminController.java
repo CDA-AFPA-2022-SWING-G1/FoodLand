@@ -8,23 +8,26 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
-import View.tableau_bord_Magasinier;
 import connexion.DBConnexion;
+import view.tableau_bord_Magasinier;
 
 public class AdminController {
-	
+
 	static String query;
-	/*r
-	 * écuperation de l'objet connexion du package DBconnexion*/
+	/*
+	 * RÃ©cuperation de l'objet connexion du package DBconnexion
+	 */
 	static Connection cn=  new DBConnexion().connect();
+	
 	public static boolean comparaison(String NomAdmin,String MdpAdmin) throws SQLException {
+		
 		boolean reussie=false;
 		Statement stmt= cn.createStatement();
-		
+
 		try{
 			//Contunue la requete
 			query="SELECT * FROM compte";
-			
+
 			ResultSet resultat=stmt.executeQuery("SELECT * FROM compte");
 			while(resultat.next())
 			{
@@ -36,10 +39,10 @@ public class AdminController {
 					return reussie;
 				}
 				else{
-					
+
 					JOptionPane.showMessageDialog(null, "Erreur connexion");
 				}
-				
+
 			}
 
 		}catch(Exception e)
@@ -47,7 +50,7 @@ public class AdminController {
 			System.out.println(e);
 		}
 		return reussie;
-		
+
 	}
 
 
