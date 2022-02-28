@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 
  */
-public class FactureFinale extends BonCommande {
+public class Facture extends BonCommande {
 	/**
 	 * 
 	 */
@@ -40,7 +40,7 @@ public class FactureFinale extends BonCommande {
 	 */
 	private BonCommande commande;
 	
-	public FactureFinale() {}
+	public Facture() {}
 
 	public Integer getId_facture() {
 		return id_facture;

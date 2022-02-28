@@ -22,11 +22,12 @@ public class ControlMainView {
 		case "ADMIN": 
 						mv.getMenuFichiers().setVisible(true);
 						mv.getMenuEdition().setVisible(true);
-						mv.getMenuVentes().setVisible(false);
+						mv.getMenuVentes().setVisible(true);
 						mv.getMenuGestion().setVisible(true);
-						mv.getMenuItemGestionStock().setVisible(false);
-						mv.getMenuItemGestionVentes().setVisible(false);
+						mv.getMenuItemGestionStock().setVisible(true);
+						mv.getMenuItemGestionVentes().setVisible(true);
 						mv.getMenuItemGestionDuPersonnel().setVisible(true);
+						mv.getMenuItemPanneauVentes().setVisible(true);
 			
 			break;
 			

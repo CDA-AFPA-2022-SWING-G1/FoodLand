@@ -52,7 +52,7 @@ public class MainView extends JFrame {
 	private JMenu menuEdition;
 	private JMenu menuVentes;
 	private JMenu menuGestion;
-	private JInternalFrame internalPanneauVentes;
+	//private JInternalFrame internalPanneauVentes;
 	private JInternalFrame internaPanneauPersonnel;
 	private JMenuBar menuBar;
 	private JMenuItem itemSaveVentesJours;
@@ -84,9 +84,7 @@ public class MainView extends JFrame {
 	 * Create the frame.
 	 */
 	public MainView(Utilisateur ut) {
-		
-		setPreferredSize(new Dimension(800, 600));
-		setSize(new Dimension(800, 600));
+		setSize(new Dimension(840, 519));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -112,26 +110,28 @@ public class MainView extends JFrame {
 		menuBar.add(menuVentes);
 		
 		
+		JInternalFrame internalPanneauVentes;
 		internalPanneauVentes = new JInternalFrame("Panneau des Ventes");
 		internalPanneauVentes.setSize(new Dimension(800, 600));
 		internalPanneauVentes.setBounds(5, 11, 424, 125);
-		internalPanneauVentes.addInternalFrameListener(new InternalFrameAdapter() {
-			@Override
-			public void internalFrameClosing(InternalFrameEvent e) {
-				internalPanneauVentes.dispose();
-			}
-			@Override
-			public void internalFrameIconified(InternalFrameEvent e) {
-				
-			}
-		});
+		internalPanneauVentes.setVisible(false);
+//		internalPanneauVentes.addInternalFrameListener(new InternalFrameAdapter() {
+//			@Override
+//			public void internalFrameClosing(InternalFrameEvent e) {
+//				internalPanneauVentes.dispose();
+//			}
+//			@Override
+//			public void internalFrameIconified(InternalFrameEvent e) {
+//				
+//			}
+//		});
 		
 		//internalFrame.setIcon(true);
-		internalPanneauVentes.setIconifiable(true);
-		internalPanneauVentes.setResizable(true);
-		internalPanneauVentes.setClosable(true);
-		internalPanneauVentes.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
+//		internalPanneauVentes.setIconifiable(true);
+//		internalPanneauVentes.setResizable(true);
+//		internalPanneauVentes.setClosable(true);
+//		internalPanneauVentes.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//		internalPanneauVentes.setVisible(true);
 		dateChooser = new JDateChooser();
 		DateListener dl = new DateListener(dateChooser);
 		System.out.println(dl.getJdc().getDate());
@@ -146,22 +146,23 @@ public class MainView extends JFrame {
 		
 		
 		
-		menuItemPanneauVentes = new JMenuItem("Panneau des ventes");
+		menuItemPanneauVentes = new JMenuItem("Panneau des Ventes");
 		menuItemPanneauVentes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				internalPanneauVentes.setVisible(true);
-				it = new InternalPanneauCommande();
-				it.setVisible(true);
-				
+//				it = new InternalPanneauCommande();
+//				it.setVisible(true);
+//				InternalTest itt = new InternalTest();
+//				itt.setVisible(true);
 			}
 		});
 		menuVentes.add(menuItemPanneauVentes);
 		
-		menuItemHistoriqueVentes = new JMenuItem("Consulter les historiques des ventes");
+		menuItemHistoriqueVentes = new JMenuItem("Panneau des commandes");
 		menuItemHistoriqueVentes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				it = new InternalPanneauCommande();
+			it = new InternalPanneauCommande();
 				it.setVisible(true);
 				contentPane.add(it);
 				
@@ -185,11 +186,12 @@ public class MainView extends JFrame {
 				// model
 				Utilisateur ut = new Utilisateur();
 				ManageUtilisateurView muv = new ManageUtilisateurView();
-				//ControlUtilisateur cut = new ControlUtilisateur(ut, muv);
+				ControlUtilisateur cut = new ControlUtilisateur(muv);
 				
 			}
 		});
 		menuGestion.add(menuItemGestionDuPersonnel);
+		
 		contentPane = new JPanel();
 		contentPane.setPreferredSize(new Dimension(800, 600));
 		contentPane.setSize(new Dimension(800, 600));
@@ -200,15 +202,20 @@ public class MainView extends JFrame {
 		internaPanneauPersonnel.setClosable(true);
 		internaPanneauPersonnel.setIconifiable(true);
 		internaPanneauPersonnel.setBounds(5, 136, 424, 104);
-		contentPane.setLayout(null);
-		contentPane.add(internalPanneauVentes);
-		internalPanneauVentes.getContentPane().setLayout(null);
+		internaPanneauPersonnel.setVisible(true);
+		
+		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.add(internalPanneauVentes, BorderLayout.CENTER);
+		//internalPanneauVentes.getContentPane().setLayout(null);
 		menuEdition.setVisible(true);
+		
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBounds(0, 0, 408, 95);
-		internalPanneauVentes.getContentPane().add(desktopPane);
-		contentPane.add(internaPanneauPersonnel);
-		internaPanneauPersonnel.setVisible(true);
+		//internalPanneauVentes.getContentPane().add(desktopPane);
+		//contentPane.add(internaPanneauPersonnel);
+		//internaPanneauPersonnel.setVisible(true);
+		//setSize(new Dimension(800, 600));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true); 
 	}
 
@@ -230,13 +237,7 @@ public class MainView extends JFrame {
 		});
 	}
 
-	public JPanel getContentPane() {
-		return contentPane;
-	}
 
-	public void setContentPane(JPanel contentPane) {
-		this.contentPane = contentPane;
-	}
 
 	public JDateChooser getDateChooser() {
 		return dateChooser;
@@ -265,7 +266,7 @@ public class MainView extends JFrame {
 	public JMenu getMenuFichiers() {
 		return menuFichiers;
 	}
-
+//
 	public void setMenuFichiers(JMenu menuFichiers) {
 		this.menuFichiers = menuFichiers;
 	}
@@ -273,7 +274,7 @@ public class MainView extends JFrame {
 	public JMenu getMenuEdition() {
 		return menuEdition;
 	}
-
+//
 	public void setMenuEdition(JMenu menuEdition) {
 		this.menuEdition = menuEdition;
 	}
@@ -281,7 +282,7 @@ public class MainView extends JFrame {
 	public JMenu getMenuVentes() {
 		return menuVentes;
 	}
-
+//
 	public void setMenuVentes(JMenu menuVentes) {
 		this.menuVentes = menuVentes;
 	}
@@ -294,13 +295,13 @@ public class MainView extends JFrame {
 		this.menuGestion = menuGestion;
 	}
 
-	public JInternalFrame getInternalPanneauVentes() {
-		return internalPanneauVentes;
-	}
-
-	public void setInternalPanneauVentes(JInternalFrame internalPanneauVentes) {
-		this.internalPanneauVentes = internalPanneauVentes;
-	}
+//	public JInternalFrame getInternalPanneauVentes() {
+//		return internalPanneauVentes;
+//	}
+//
+//	public void setInternalPanneauVentes(JInternalFrame internalPanneauVentes) {
+//		this.internalPanneauVentes = internalPanneauVentes;
+//	}
 
 	public JInternalFrame getInternaPanneauPersonnel() {
 		return internaPanneauPersonnel;

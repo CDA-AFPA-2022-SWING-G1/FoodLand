@@ -38,7 +38,7 @@ public class ImageConverter {
 
         BufferedImage resizedImage = crop(originalImage, x, y, cropWidth, cropHeight);
 
-		System.out.println(resizedImage);
+		//System.out.println(resizedImage);
 		icon = new ImageIcon(resizedImage);
 		return icon;
 	}

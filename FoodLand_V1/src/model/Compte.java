@@ -92,6 +92,12 @@ public class Compte {
 	public void setId_utilisateur(Integer id_utilisateur) {
 		this.id_utilisateur = id_utilisateur;
 	}
+
+	@Override
+	public String toString() {
+		return "Compte [id_compte=" + id_compte + ", login_compte=" + login_compte + ", password_compte="
+				+ password_compte + ", utilisateur=" + utilisateur + ", id_utilisateur=" + id_utilisateur + "]";
+	}
 	
 	
 	

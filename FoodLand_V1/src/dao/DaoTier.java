@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -26,8 +27,28 @@ public class DaoTier implements Dao<Entreprise>{
 
 	@Override
 	public int create(Entreprise t) {
-		// TODO Auto-generated method stub
-		return 0;
+		int res = 0;
+		
+		String insert = "INSERT INTO entreprise (siret_entreprise, nom_entreprise, adresse_entreprise, code_postal_entreprise, ville_entreprise, pays_entreprise, tel_entreprise, mail_entreprise, logo_entreprise) VALUES ("
+				+ "'" + t.getSiret_entreprise() + "', "
+				+ "'" + t.getNom_entreprise() + "', "
+				+ "'" + t.getAdresse_entreprise() + "', "
+				+ "'" + t.getCode_postale_entreprise()+ "', "
+				+ "'" + t.getVille_entreprise() + "', "
+				+ "'" + t.getPays_entreprise() + "', "
+				+ "'" + t.getTelephone_entreprise()+ "', "
+				+ t.getMail_entreprise() + ","
+				+ "'" + t.getLogo_entreprise() + "' "
+				+ ");";
+		
+		try {
+			stmt = c.createStatement();
+			res = stmt.executeUpdate(insert);
+		} catch (SQLException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+		return res;
 	}
 
 	@Override

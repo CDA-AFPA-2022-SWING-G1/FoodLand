@@ -7,10 +7,10 @@ import java.sql.Statement;
 import java.util.List;
 
 import model.Categorie_produit;
-import model.FactureFinale;
+import model.Facture;
 import outils.ConnectionDB;
 
-public class DaoFactureFinale implements Dao<FactureFinale> {
+public class DaoFacture implements Dao<Facture> {
 
 	
 	private Connection c;
@@ -19,37 +19,37 @@ public class DaoFactureFinale implements Dao<FactureFinale> {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public DaoFactureFinale() {
+	public DaoFacture() {
 		conn = new ConnectionDB();
 		this.c = conn.getConnectionDB();
 	}
 
 	@Override
-	public int create(FactureFinale t) {
+	public int create(Facture t) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public FactureFinale read(FactureFinale t) {
+	public Facture read(Facture t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int update(FactureFinale t) {
+	public int update(Facture t) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int delete(FactureFinale t) {
+	public int delete(Facture t) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public List<FactureFinale> readAll() {
+	public List<Facture> readAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

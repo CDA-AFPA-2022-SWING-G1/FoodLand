@@ -1,4 +1,6 @@
-/view/
-/serviceMetiers/
 /outils/
+/serviceMetiers/
+/tests/
 /dao/
+/view/
+/model/

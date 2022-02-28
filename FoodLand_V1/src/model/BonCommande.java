@@ -19,6 +19,10 @@ public class BonCommande {
 	 */
 	private Integer id_bonCommande;
 	/**
+	 * intervenants
+	 */
+	private String nom_commercial_commande, nom_acheteur_commande, nom_preparateur_commande, nom_delivreur_commande, nom_receptionneur_commande;
+	/**
 	 * dates
 	 */
 	private Date date_creation_commande, date_preparation_commande, date_retrait_commande;
@@ -29,7 +33,8 @@ public class BonCommande {
 	/**
 	 * relation one to many table lignecommandes
 	 */
-	private List<Produit> list_produits; // si Produit a pour attribut une quantité/poids à préciser pour cette commande
+	private List<LigneCommande> liste_lignes;
+	//private List<Produit> list_produits; // si Produit a pour attribut une quantité/poids à préciser pour cette commande
 	// ou 
 	private HashMap<Produit, Integer> produit_quantite; // map produit & quantité à préciser en dehors du produit
 	/**
@@ -41,7 +46,7 @@ public class BonCommande {
 	 *  
 	 */
 	private Type_commande type_commande; // 
-	private Integer fk_id_commande;
+	private Integer fk_id_type_commande;
 	/**
 	 * relation one to many 
 	 */
@@ -57,7 +62,7 @@ public class BonCommande {
 	public BonCommande() {}
 	
 	public BonCommande(Integer id_bonCommande, Date date_creation_commande, Date date_preparation_commande,
-			Date date_retrait_commande, List<Produit> list_produits, HashMap<Produit, Integer> produit_quantite,
+			Date date_retrait_commande, List<LigneCommande> liste_lignes, HashMap<Produit, Integer> produit_quantite,
 			Entreprise entreprise, Integer fk_id_entreprise, Type_commande type_commande, Integer fk_id_commande,
 			List<Utilisateur> utilisateurs) {
 		
@@ -65,12 +70,12 @@ public class BonCommande {
 		this.date_creation_commande = date_creation_commande;
 		this.date_preparation_commande = date_preparation_commande;
 		this.date_retrait_commande = date_retrait_commande;
-		this.list_produits = list_produits;
-		this.produit_quantite = produit_quantite;
+		this.liste_lignes = liste_lignes;
+		//this.produit_quantite = produit_quantite;
 		this.entreprise = entreprise;
 		this.fk_id_entreprise = fk_id_entreprise;
 		this.type_commande = type_commande;
-		this.fk_id_commande = fk_id_commande;
+		this.fk_id_type_commande = fk_id_commande;
 		this.utilisateurs = utilisateurs;
 	}
 
@@ -80,6 +85,55 @@ public class BonCommande {
 
 	public void setId_bonCommande(Integer id_bonCommande) {
 		this.id_bonCommande = id_bonCommande;
+	}
+	
+	
+	public boolean isAccepter_ou_refuser_commande() {
+		return accepter_ou_refuser_commande;
+	}
+
+	public void setAccepter_ou_refuser_commande(boolean accepter_ou_refuser_commande) {
+		this.accepter_ou_refuser_commande = accepter_ou_refuser_commande;
+	}
+
+	public String getNom_commercial_commande() {
+		return nom_commercial_commande;
+	}
+
+	public void setNom_commercial_commande(String nom_commercial_commande) {
+		this.nom_commercial_commande = nom_commercial_commande;
+	}
+
+	public String getNom_acheteur_commande() {
+		return nom_acheteur_commande;
+	}
+
+	public void setNom_acheteur_commande(String nom_acheteur_commande) {
+		this.nom_acheteur_commande = nom_acheteur_commande;
+	}
+
+	public String getNom_preparateur_commande() {
+		return nom_preparateur_commande;
+	}
+
+	public void setNom_preparateur_commande(String nom_preparateur_commande) {
+		this.nom_preparateur_commande = nom_preparateur_commande;
+	}
+
+	public String getNom_delivreur_commande() {
+		return nom_delivreur_commande;
+	}
+
+	public void setNom_delivreur_commande(String nom_delivreur_commande) {
+		this.nom_delivreur_commande = nom_delivreur_commande;
+	}
+
+	public String getNom_receptionneur_commande() {
+		return nom_receptionneur_commande;
+	}
+
+	public void setNom_receptionneur_commande(String nom_receptionneur_commande) {
+		this.nom_receptionneur_commande = nom_receptionneur_commande;
 	}
 
 	public Date getDate_creation_commande() {
@@ -106,21 +160,21 @@ public class BonCommande {
 		this.date_retrait_commande = date_retrait_commande;
 	}
 
-	public List<Produit> getList_produits() {
-		return list_produits;
+	public List<LigneCommande> getListe_lignes() {
+		return liste_lignes;
 	}
 
-	public void setList_produits(List<Produit> list_produits) {
-		this.list_produits = list_produits;
+	public void setliste_lignes(List<LigneCommande> liste_lignes) {
+		this.liste_lignes = liste_lignes;
 	}
 
-	public HashMap<Produit, Integer> getProduit_quantite() {
-		return produit_quantite;
-	}
-
-	public void setProduit_quantite(HashMap<Produit, Integer> produit_quantite) {
-		this.produit_quantite = produit_quantite;
-	}
+//	public HashMap<Produit, Integer> getProduit_quantite() {
+//		return produit_quantite;
+//	}
+//
+//	public void setProduit_quantite(HashMap<Produit, Integer> produit_quantite) {
+//		this.produit_quantite = produit_quantite;
+//	}
 
 	public Entreprise getEntreprise() {
 		return entreprise;
@@ -153,17 +207,16 @@ public class BonCommande {
 		
 	      if (type_commande != null)
 	      {
-	         this.fk_id_commande = type_commande.getId_type_commande();    
+	         this.fk_id_type_commande = type_commande.getId_type_commande();    
 	      }
 	}
 	
-
-	public Integer getFk_id_commande() {
-		return fk_id_commande;
+	public Integer getFk_id_type_commande() {
+		return fk_id_type_commande;
 	}
 
-	public void setFk_id_commande(Integer fk_id_commande) {
-		this.fk_id_commande = fk_id_commande;
+	public void setFk_id_type_commande(Integer fk_id_type_commande) {
+		this.fk_id_type_commande = fk_id_type_commande;
 	}
 
 	public List<Utilisateur> getUtilisateurs() {
@@ -172,6 +225,20 @@ public class BonCommande {
 
 	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
 		this.utilisateurs = utilisateurs;
+	}
+
+	@Override
+	public String toString() {
+		return "BonCommande [id_bonCommande=" + id_bonCommande + ", nom_commercial_commande=" + nom_commercial_commande
+				+ ", nom_acheteur_commande=" + nom_acheteur_commande + ", nom_preparateur_commande="
+				+ nom_preparateur_commande + ", nom_delivreur_commande=" + nom_delivreur_commande
+				+ ", nom_receptionneur_commande=" + nom_receptionneur_commande + ", date_creation_commande="
+				+ date_creation_commande + ", date_preparation_commande=" + date_preparation_commande
+				+ ", date_retrait_commande=" + date_retrait_commande + ", accepter_ou_refuser_commande="
+				+ accepter_ou_refuser_commande + ", liste_lignes=" + liste_lignes + ", produit_quantite="
+				+ produit_quantite + ", entreprise=" + entreprise + ", fk_id_entreprise=" + fk_id_entreprise
+				+ ", type_commande=" + type_commande + ", fk_id_type_commande=" + fk_id_type_commande
+				+ ", utilisateurs=" + utilisateurs + ", liste_intervenants=" + liste_intervenants + "]";
 	}
 	
 	

@@ -24,17 +24,18 @@ public class DaoColumns {
 		this.c = conn.getConnectionDB();
 	}
 
-	public ArrayList<String> columnsTable(String nomTable){
+	// permet d'obtenir les noms des colonnes d'une table cible 
+	public ArrayList<String> columnsTable(String nomBase, String nomTable){
 		
 		ArrayList<String> listCols = new ArrayList<>();
 		try {
 			stmt = c.createStatement();
-			String q = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'"+ nomTable + "';";
+			String q = "SHOW COLUMNS FROM "+ nomBase + "."+ nomTable + ";";
 			
 			rs = stmt.executeQuery(q);
 			
 			while(rs.next()) {
-			String col = rs.getString("COLUMN_NAME");
+			String col = rs.getString("field");
 			// restrictions
 			if(!col.contains("MDP") || !col.contains("motdepasse")) {
 			listCols.add(col);

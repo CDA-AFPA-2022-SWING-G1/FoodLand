@@ -10,23 +10,18 @@ import java.util.List;
 import java.util.Vector;
 
 import model.Categorie_produit;
+import model.Compte;
+import model.Role;
 import model.Utilisateur;
 import outils.ConnectionDB;
 
 public class DaoUtilisateur implements Dao<Utilisateur> {
 
-	
 	private Connection c;
 	private ConnectionDB conn;
 	private Statement stmt;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-	
-	private String joinRoleAndCompte = 
-			"SELECT * FROM `utilisateur` LEFT JOIN roles ON utilisateur.fk_id_role = roles.id_role where utilisateur.id_user = 8;";
-	
-	
-	//SELECT * FROM `utilisateur` LEFT JOIN roles ON utilisateur.fk_id_role = roles.id_role LEFT JOIN compte on utilisateur.fk_compte_user = compte.id_compte where utilisateur.id_user = 8;
 	
 	public DaoUtilisateur() {
 		conn = new ConnectionDB();
@@ -46,8 +41,8 @@ public class DaoUtilisateur implements Dao<Utilisateur> {
 				+ "'" + t.getTel_utilisateur() + "', "
 				+ "'" + t.getMail_utilisateur() + "', "
 				+ t.getFk_id_role() + ","
-				+ "'" + t.getPhoto_utilisateur() + "', "
-				+ t.getFk_id_compte() 
+				+ "'" + t.getPhoto_utilisateur() + "' "
+				
 				+ ");";
 		try {
 			stmt = c.createStatement();
@@ -61,16 +56,16 @@ public class DaoUtilisateur implements Dao<Utilisateur> {
 
 	@Override
 	public Utilisateur read(Utilisateur t) {
-		
+		//SELECT * FROM `utilisateur` LEFT JOIN roles ON utilisateur.fk_id_role = roles.id_role LEFT JOIN compte on utilisateur.id_user = compte.fk_id_user where utilisateur.id_user = " + t.getIdUtilisateur();
+		//SELECT * FROM utilisateur WHERE id_user =" + t.getIdUtilisateur()
 		try {
 			stmt = c.createStatement();
-			String read = "SELECT * FROM utilisateur WHERE id_user =" + t.getIdUtilisateur();
+			String read = "SELECT * FROM `utilisateur` LEFT JOIN roles ON utilisateur.fk_id_role = roles.id_role LEFT JOIN compte on utilisateur.id_user = compte.fk_id_user where utilisateur.id_user = " + t.getIdUtilisateur();
 			rs = stmt.executeQuery(read);
 			
 			while(rs.next()) {
 //				System.out.println(rs.getInt("id_user"));
 //				System.out.println(rs.getString("nom_user"));
-
 				
 				t.setIdUtilisateur((rs.getInt("id_user")));
 				t.setNom_utilisateur((rs.getString("nom_user")));
@@ -81,8 +76,21 @@ public class DaoUtilisateur implements Dao<Utilisateur> {
 				t.setTel_utilisateur(rs.getString("tel_user"));
 				t.setMail_utilisateur(rs.getString("mail_user"));
 				t.setFk_id_role(rs.getInt("fk_id_role"));
-				t.setPhoto_utilisateur(rs.getBytes("photo_user"));
-				t.setFk_id_compte(rs.getInt("fk_compte_user"));
+				t.setPhoto_utilisateur(rs.getString("photo_user"));
+				
+				Role r = new Role();
+				r.setId_role(rs.getInt("id_role"));
+				r.setLibelle_role(rs.getString("lib_role"));
+				Compte c = new Compte();
+				c.setId_compte(rs.getInt("id_compte"));
+				c.setId_utilisateur(rs.getInt("fk_id_user"));
+				c.setLogin_compte(rs.getString("login_compte"));
+				c.setPassword_compte(rs.getString("password_compte"));
+				
+				t.setCompte_utilisateur(c);
+				t.setRole_utilisateur(r);
+				
+				c.setUtilisateur(t);
 			}
 			
 		} catch (SQLException e1) {
@@ -110,17 +118,12 @@ public class DaoUtilisateur implements Dao<Utilisateur> {
 					+ "tel_user= '" +t.getTel_utilisateur() + "', "
 					+ "mail_user= '" + t.getMail_utilisateur() + "', "
 					+ "fk_id_role_user= '" + t.getFk_id_role() + "'"
-					+ "photo_user= '" + t.getPhoto_utilisateur() + "', "
-					+ "fk_compte_user= '" + t.getFk_id_compte() + "', "
+					+ "photo_user= '" + t.getPhoto_utilisateur() + "' "
+					
 					
 					+ "WHERE id_user = " + t.getIdUtilisateur() + "";
 			
-			String update2 = "UPDATE utilisateur SET " 
-					+ "id_user= '" + t.getIdUtilisateur() + "', "
-					+ "nom_user= '" + t.getNom_utilisateur() + "', "
-					+ "photo_user= '" + t.getPhoto_utilisateur() + "'"
-					+ "WHERE id_user = " + t.getIdUtilisateur() + "";
-			
+
 			r = stmt.executeUpdate(update);
 		} catch (SQLException ex) {
 			// TODO Auto-generated catch block
@@ -154,7 +157,7 @@ public class DaoUtilisateur implements Dao<Utilisateur> {
 		Vector<Utilisateur> list = new Vector<>();
 		try {
 			stmt = c.createStatement();
-			String select = "SELECT * FROM utilisateur;";
+			String select = "SELECT * FROM utilisateur LEFT JOIN roles ON utilisateur.fk_id_role = roles.id_role LEFT JOIN compte on utilisateur.id_user = compte.fk_id_user;";
 			rs = stmt.executeQuery(select);
 			
 			while(rs.next()) {
@@ -168,10 +171,23 @@ public class DaoUtilisateur implements Dao<Utilisateur> {
 				t.setTel_utilisateur(rs.getString("tel_user"));
 				t.setMail_utilisateur(rs.getString("mail_user"));
 				t.setFk_id_role(rs.getInt("fk_id_role"));
-				t.setPhoto_utilisateur(rs.getBytes("photo_user"));
-				t.setFk_id_compte(rs.getInt("fk_compte_user"));
+				t.setPhoto_utilisateur(rs.getString("photo_user"));
+				//t.setFk_id_compte(rs.getInt("fk_compte_user"));
 				
-				//System.out.println(utilisateur.toString());
+				Role r = new Role();
+				r.setId_role(rs.getInt("id_role"));
+				r.setLibelle_role(rs.getString("lib_role"));
+				Compte c = new Compte();
+				c.setId_compte(rs.getInt("id_compte"));
+				c.setId_utilisateur(rs.getInt("fk_id_user"));
+				c.setLogin_compte(rs.getString("login_compte"));
+				c.setPassword_compte(rs.getString("password_compte"));
+				
+				t.setCompte_utilisateur(c);
+				t.setRole_utilisateur(r);
+				
+				//c.setUtilisateur(t);
+				System.out.println(t.toString());
 				list.add(t);
 			}
 		} catch (SQLException e) {
@@ -185,18 +201,19 @@ public class DaoUtilisateur implements Dao<Utilisateur> {
 		ArrayList<String> listCols = new ArrayList<>();
 		try {
 			stmt = c.createStatement();
-			String q = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'utilisateur';";
-			
+			//String q = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'utilisateur';";
+			String q= "SHOW COLUMNS FROM foodland.utilisateur";
 			rs = stmt.executeQuery(q);
 			
 			while(rs.next()) {
-			String col = rs.getString("COLUMN_NAME");
+			String col = rs.getString("field");
 			listCols.add(col);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+		System.out.println(listCols.size());
 		return listCols;
 	}
 	

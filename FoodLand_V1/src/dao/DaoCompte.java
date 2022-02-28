@@ -51,7 +51,7 @@ public class DaoCompte implements Dao<Compte> {
 		
 		try {
 			stmt = c.createStatement();
-			String read = "SELECT * FROM utilisateur WHERE id_compte =" + t.getId_compte();
+			String read = "SELECT * FROM compte WHERE id_compte =" + t.getId_compte();
 			rs = stmt.executeQuery(read);
 			
 			while(rs.next()) {

@@ -20,10 +20,12 @@ public class Entreprise {
 	private String siret_entreprise, adresse_entreprise, nom_entreprise, 
 						ville_entreprise, code_postale_entreprise, pays_entreprise, telephone_entreprise, mail_entreprise;
 	/**
-	 * one to many table categorie-entreprise
+	 * one to many table entreprise-types
 	 */
 	private List<Type_entreprise> liste_types_entreprise;
 	
+	private String logo_entreprise;
+
 	public Entreprise() {}
 	
 	public Entreprise(Integer id_entreprise, Type_entreprise type_entreprise, Integer id_type_entrperise,
@@ -144,6 +146,19 @@ public class Entreprise {
 		this.liste_types_entreprise = liste_types_entreprise;
 	}
 	
+	public String getLogo_entreprise() {
+		return logo_entreprise;
+	}
+
+	public void setLogo_entreprise(String logo_entreprise) {
+		this.logo_entreprise = logo_entreprise;
+	}
 	
-	
+	public Integer getId_type_entreprise() {
+		return id_type_entreprise;
+	}
+
+	public void setId_type_entreprise(Integer id_type_entreprise) {
+		this.id_type_entreprise = id_type_entreprise;
+	}
 }

@@ -4,6 +4,7 @@
 
 package model;
 
+import java.util.Arrays;
 import java.util.List;
 
 /************************************************************/
@@ -15,7 +16,7 @@ public class Utilisateur {
 	private Integer idUtilisateur;
 	private String nom_utilisateur, prenom_utilisateur, adresse_utilisateur, code_postale_utilisateur,
 						ville_utilisateur, tel_utilisateur, mail_utilisateur;
-	private byte[] photo_utilisateur;
+	private String photo_utilisateur;
 	private String mdp;
 	//private List<Adresse> list_Addresse;
 	
@@ -55,7 +56,7 @@ public class Utilisateur {
 
 	public Utilisateur(Integer idUtilisateur, String nom_utilisateur, String prenom_utilisateur,
 			String adresse_utilisateur, String code_postale_utilisateur, String ville_utilisateur,
-			String tel_utilisateur, String mail_utilisateur, byte[] photo_utilisateur, String mdp, Integer fk_id_compte,
+			String tel_utilisateur, String mail_utilisateur, String photo_utilisateur, String mdp, Integer fk_id_compte,
 			Compte compte_utilisateur, Integer fk_id_role, Role role_utilisateur) {
 		super();
 		this.idUtilisateur = idUtilisateur;
@@ -178,11 +179,11 @@ public class Utilisateur {
 		this.mail_utilisateur = mail_utilisateur;
 	}
 
-	public byte[] getPhoto_utilisateur() {
+	public String getPhoto_utilisateur() {
 		return photo_utilisateur;
 	}
 
-	public void setPhoto_utilisateur(byte[] photo_utilisateur) {
+	public void setPhoto_utilisateur(String photo_utilisateur) {
 		this.photo_utilisateur = photo_utilisateur;
 	}
 
@@ -201,6 +202,21 @@ public class Utilisateur {
 	public void setRole_utilisateur(Role role_utilisateur) {
 		this.role_utilisateur = role_utilisateur;
 	}
+
+	@Override
+	public String toString() {
+		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", nom_utilisateur=" + nom_utilisateur
+				+ ", prenom_utilisateur=" + prenom_utilisateur + ", adresse_utilisateur=" + adresse_utilisateur
+				+ ", code_postale_utilisateur=" + code_postale_utilisateur + ", ville_utilisateur=" + ville_utilisateur
+				+ ", tel_utilisateur=" + tel_utilisateur + ", mail_utilisateur=" + mail_utilisateur
+				+ ", photo_utilisateur=" + "" + ", mdp=" + mdp + ", fk_id_compte="
+				+ fk_id_compte + ", compte_utilisateur=" + compte_utilisateur + ", fk_id_role=" + fk_id_role
+				+ ", role_utilisateur=" + role_utilisateur + "]";
+		//photo_utilisateur
+		//Arrays.toString(photo_utilisateur)
+	}
+
+
 	
 	
 	

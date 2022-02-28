@@ -7,10 +7,13 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.BonCommande;
+import model.LigneCommande;
 import outils.ConnectionDB;
 
 /************************************************************/
@@ -32,42 +35,242 @@ public class DaoCommande implements Dao<BonCommande> {
 	
 	@Override
 	public int create(BonCommande t) {
-		// TODO Auto-generated method stub
-		return 0;
+		int res = 0;
+		
+		String insert = "INSERT INTO commande (nom_commercial_commande, nom_acheteur_commande, "
+				+ "nom_preparateur_commande, nom_delivreur_commande, nom_receptionneur_commande, "
+				+ "date_creation_commande, date_preparation_commande, date_retrait_commande, "
+				+ "accepter_ou_refuser_commande, fk_id_type_commande, fk_id_entreprise) VALUES ("
+				+ "'" + t.getNom_commercial_commande()+ "', "
+				+ "'" + t.getNom_acheteur_commande()+ "', "
+				+ "'" + t.getNom_preparateur_commande()+ "', "
+				+ "'" + t.getNom_delivreur_commande() + "', "
+				+ "'" + t.getNom_receptionneur_commande() + "', "
+				+ "'" + t.getDate_creation_commande() + "', "
+				+ "'" + t.getDate_preparation_commande() + "', "
+				+ "'" + t.getDate_retrait_commande() + "',"
+				+ "'" + t.isAccepter_ou_refuser_commande() + "', "
+				+ "" + t.getFk_id_type_commande() + ", "
+				+ "" + t.getFk_id_entreprise() + "" 
+				+ ");";
+		try {
+			stmt = c.createStatement();
+			res = stmt.executeUpdate(insert);
+		} catch (SQLException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+		return res;
 	}
 
 	@Override
 	public BonCommande read(BonCommande t) {
 		// TODO Auto-generated method stub
-		t.getFk_id_commande();
-		//if null
-		//alors
-		Integer tt = t.getFk_id_entreprise(); 
-		String colidentreprise = "fk_id_entreprise";
+		String r = "SELECT * FROM commande left join lignecommandes on commande.id_commande = lignecommandes.fk_id_commande WHERE id_commande = " + t.getId_bonCommande() + ";";
 		
-		String r= "SELECT * FROM commande where " + colidentreprise + "=" + tt + ";";
+		try {
+			ArrayList<LigneCommande> liste_lignes = new ArrayList<>();
+			stmt = c.createStatement();
+			rs = stmt.executeQuery(r);
+			while(rs.next()) {
+			t.setId_bonCommande((rs.getInt("id_commande")));
+			t.setNom_commercial_commande((rs.getString("nom_commercial_commande")));
+			t.setNom_acheteur_commande((rs.getString("nom_acheteur_commande")));
+			t.setNom_preparateur_commande((rs.getString("nom_preparateur_commande")));
+			t.setNom_delivreur_commande((rs.getString("nom_delivreur_commande")));
+			t.setNom_receptionneur_commande((rs.getString("nom_receptionneur_commande")));
+			t.setDate_creation_commande(rs.getDate("date_creation_commande"));
+			t.setDate_preparation_commande(rs.getDate("date_preparation_commande"));
+			t.setDate_retrait_commande(rs.getDate("date_retrait_commande"));
+			t.setAccepter_ou_refuser_commande(rs.getBoolean("accepter_ou_refuser_commande"));
+			t.setFk_id_type_commande(rs.getInt("fk_id_type_commande"));
+			t.setFk_id_entreprise(rs.getInt("fk_id_entreprise"));
+			
+		//  jointure lignes commande
+			
+			LigneCommande ligne = new LigneCommande();
+			
+				ligne.setFk_id_commande(rs.getInt("id_ligne_commande"));
+				ligne.setCode_barre_ligne_commande(rs.getString("code_barre_ligne_commande"));
+				ligne.setDesignation_ligne_commande(rs.getString("designation_ligne_commande"));
+				ligne.setPrix_unitaire_ligne_commande(rs.getDouble("prix_unitaire_ligne_commande"));
+				ligne.setPoids_quantite_ligne_commande(rs.getDouble("poids_quantite_ligne_commande"));
+				ligne.setTVA_ligne_commande(rs.getString("TVA_ligne_commande"));
+				ligne.setFk_id_commande(rs.getInt("fk_id_commande"));
+				ligne.setFk_id_categorie_lignecommandes(rs.getInt("fk_id_categorie_lignecommandes"));
+				liste_lignes.add(ligne);
+				t.setliste_lignes(liste_lignes);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		// ou jointure
+		return t;
+	}
+	
+	public BonCommande read(String column_name, int criterId) {
+		// TODO Auto-generated method stub
+		String r= "SELECT * FROM commande left join lignecommandes on commande.id_commande = lignecommandes.fk_id_commande WHERE " + column_name + "= " + criterId + ";";
+		BonCommande t = null;
+		try {
+			ArrayList<LigneCommande> liste_lignes = new ArrayList<>();
+			stmt = c.createStatement();
+			rs = stmt.executeQuery(r);
+			while(rs.next()) {
+			t.setId_bonCommande((rs.getInt("id_commande")));
+			t.setNom_commercial_commande((rs.getString("nom_commercial_commande")));
+			t.setNom_acheteur_commande((rs.getString("nom_acheteur_commande")));
+			t.setNom_preparateur_commande((rs.getString("nom_preparateur_commande")));
+			t.setNom_delivreur_commande((rs.getString("nom_delivreur_commande")));
+			t.setNom_receptionneur_commande((rs.getString("nom_receptionneur_commande")));
+			t.setDate_creation_commande(rs.getDate("date_creation_commande"));
+			t.setDate_preparation_commande(rs.getDate("date_preparation_commande"));
+			t.setDate_retrait_commande(rs.getDate("date_retrait_commande"));
+			t.setAccepter_ou_refuser_commande(rs.getBoolean("accepter_ou_refuser_commande"));
+			t.setFk_id_type_commande(rs.getInt("fk_id_type_commande"));
+			t.setFk_id_entreprise(rs.getInt("fk_id_entreprise"));
+			
+		//  jointure lignes commande
+			
+			LigneCommande ligne = new LigneCommande();
+			
+				ligne.setFk_id_commande(rs.getInt("id_ligne_commande"));
+				ligne.setCode_barre_ligne_commande(rs.getString("code_barre_ligne_commande"));
+				ligne.setDesignation_ligne_commande(rs.getString("designation_ligne_commande"));
+				ligne.setPrix_unitaire_ligne_commande(rs.getDouble("prix_unitaire_ligne_commande"));
+				ligne.setPoids_quantite_ligne_commande(rs.getDouble("poids_quantite_ligne_commande"));
+				ligne.setTVA_ligne_commande(rs.getString("TVA_ligne_commande"));
+				ligne.setFk_id_commande(rs.getInt("fk_id_commande"));
+				ligne.setFk_id_categorie_lignecommandes(rs.getInt("fk_id_categorie_lignecommandes"));
+				liste_lignes.add(ligne);
+				t.setliste_lignes(liste_lignes);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		return null;
+		return t;
 	}
 
 	@Override
 	public int update(BonCommande t) {
-		// TODO Auto-generated method stub
-		return 0;
+		int r = 0;
+
+		try {
+			System.out.println(c.toString());
+			stmt = c.createStatement();
+			
+			String update = "UPDATE commande SET " 
+					+ "id_commande= '" + t.getId_bonCommande() + "', "
+					+ "nom_commercial_commande= '" + t.getNom_commercial_commande() + "', "
+					+ "nom_acheteur_commande= '" + t.getNom_acheteur_commande() + "', "
+					+ "nom_preparateur_commande= '" + t.getNom_preparateur_commande() + "', "
+					+ "nom_delivreur_commande= '" + t.getNom_delivreur_commande() + "', "
+					+ "nom_receptionneur_commande= '" + t.getNom_receptionneur_commande() + "', "
+					+ "date_creation_commande= '" +t.getDate_creation_commande()+ "', "
+					+ "date_preparation_commande= '" + t.getDate_preparation_commande() + "', "
+					+ "date_retrait_commande= '" + t.getDate_retrait_commande() + "',"
+					+ "accepter_ou_refuser_commande	= '" + t.isAccepter_ou_refuser_commande() + "', "
+					+ "fk_id_type_commande= '" + t.getFk_id_type_commande() + "',"
+					+ "fk_id_entreprise= '" + t.getFk_id_entreprise() + "'"
+					
+					+ "WHERE id_commande = " + t.getId_bonCommande() + "";
+			
+
+			r = stmt.executeUpdate(update);
+		} catch (SQLException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+
+		return r;
 	}
 
 	@Override
 	public int delete(BonCommande t) {
-		// TODO Auto-generated method stub
-		return 0;
+		int r = 0;
+		try {
+			stmt = c.createStatement();
+			String delete = "DELETE FROM commande WHERE id_commande = "  
+							+ "'" + t.getId_bonCommande() + "'" 
+								+ " AND nom_commercial_commande = " + "'" + t.getNom_commercial_commande() + "'" + ";";
+			System.out.println(delete);
+			r = stmt.executeUpdate(delete);
+			System.out.println(r);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return r;
 	}
 
 	@Override
 	public List<BonCommande> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<BonCommande> listeCommandes = new ArrayList<>();
+		String r = "SELECT * FROM commande;";
+		
+		try {
+			stmt = c.createStatement();
+			rs = stmt.executeQuery(r);
+			while(rs.next()) {
+				BonCommande t = new BonCommande();
+				t.setId_bonCommande((rs.getInt("id_commande")));
+				t.setNom_commercial_commande((rs.getString("nom_commercial_commande")));
+				t.setNom_acheteur_commande((rs.getString("nom_acheteur_commande")));
+				t.setNom_preparateur_commande((rs.getString("nom_preparateur_commande")));
+				t.setNom_delivreur_commande((rs.getString("nom_delivreur_commande")));
+				t.setNom_receptionneur_commande((rs.getString("nom_receptionneur_commande")));
+				t.setDate_creation_commande(rs.getDate("date_creation_commande"));
+				t.setDate_preparation_commande(rs.getDate("date_preparation_commande"));
+				t.setDate_retrait_commande(rs.getDate("date_retrait_commande"));
+				t.setAccepter_ou_refuser_commande(rs.getBoolean("accepter_ou_refuser_commande"));
+				t.setFk_id_type_commande(rs.getInt("fk_id_type_commande"));
+				t.setFk_id_entreprise(rs.getInt("fk_id_entreprise"));
+				listeCommandes.add(t);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return listeCommandes;
+	}
+	
+	
+	public List<BonCommande> readCommandesByCriteria(String nomColonne, String critere) {
+		ArrayList<BonCommande> listeCommandes = new ArrayList<>();
+		String r= "SELECT * FROM commande WHERE " + nomColonne + "=" + critere + ";";
+		
+		try {
+			stmt = c.createStatement();
+			rs = stmt.executeQuery(r);
+			while(rs.next()) {
+				BonCommande t = new BonCommande();
+				t.setId_bonCommande((rs.getInt("id_commande")));
+				t.setNom_commercial_commande((rs.getString("nom_commercial_commande")));
+				t.setNom_acheteur_commande((rs.getString("nom_acheteur_commande")));
+				t.setNom_preparateur_commande((rs.getString("nom_preparateur_commande")));
+				t.setNom_delivreur_commande((rs.getString("nom_delivreur_commande")));
+				t.setNom_receptionneur_commande((rs.getString("nom_receptionneur_commande")));
+				t.setDate_creation_commande(rs.getDate("date_creation_commande"));
+				t.setDate_preparation_commande(rs.getDate("date_preparation_commande"));
+				t.setDate_retrait_commande(rs.getDate("date_retrait_commande"));
+				t.setAccepter_ou_refuser_commande(rs.getBoolean("accepter_ou_refuser_commande"));
+				t.setFk_id_type_commande(rs.getInt("fk_id_type_commande"));
+				t.setFk_id_entreprise(rs.getInt("fk_id_entreprise"));
+				listeCommandes.add(t);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listeCommandes;
 	}
 
 	

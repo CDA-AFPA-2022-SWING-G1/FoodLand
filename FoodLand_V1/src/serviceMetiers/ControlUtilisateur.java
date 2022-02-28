@@ -1,9 +1,13 @@
 package serviceMetiers;
 
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dao.DaoCompte;
@@ -13,6 +17,7 @@ import model.Compte;
 import model.Role;
 import model.Utilisateur;
 import outils.HashMe;
+import outils.ValidationPatternsRegex;
 import view.AuthentificationView;
 import view.MainView;
 import view.ManageUtilisateurView;
@@ -40,6 +45,11 @@ public class ControlUtilisateur {
 		daoUtilisateur = new DaoUtilisateur();
 	}
 	
+	public ControlUtilisateur(ManageUtilisateurView muv) {
+		daoUtilisateur = new DaoUtilisateur();
+		this.muv = muv;
+		manageButtonCreer();
+	}
 	
 	public boolean authentifier(Utilisateur e) {
 		System.out.println("utilsateur recherché: " + e.toString());
@@ -83,7 +93,14 @@ public class ControlUtilisateur {
 	
 	public Utilisateur rechercheUnUtilisateur(Utilisateur ut) {
 		ut = daoUtilisateur.read(ut);
-		System.out.println(ut.toString());
+		DaoCompte daoCompte = new DaoCompte();
+		Compte c = new Compte();
+		c.setId_utilisateur(ut.getFk_id_compte());
+		c = daoCompte.read(c);
+		
+		ut.setCompte_utilisateur(c);
+//		System.out.println(c.toString());
+//		System.out.println(ut.toString());
 		return ut;
 	}
 
@@ -102,15 +119,15 @@ public class ControlUtilisateur {
 		return daoUtilisateur.delete(ut);
 	}
 
-	public ArrayList<Utilisateur> lister() {
-		ArrayList<Utilisateur> liste = (ArrayList<Utilisateur>) daoUtilisateur.readAll();
+	public Vector<Utilisateur> lister() {
+		Vector<Utilisateur> liste =  (Vector<Utilisateur>) daoUtilisateur.readAll();
 		System.out.println(liste.toString());
 		return liste;
 	}
 	
 	public ArrayList cols() {
 		ArrayList<String> liste = (ArrayList<String>) daoUtilisateur.listeColumns();
-		System.out.println(liste.toString());
+		System.out.println("cols: " + liste.size());
 		return liste;
 	}
 	
@@ -130,4 +147,50 @@ public class ControlUtilisateur {
 		ArrayList<Role> listeRoles = (ArrayList<Role>) daoRole.readAll();
 		return listeRoles;
 	}
+	
+	public void manageButtonCreer() {
+		muv.getBtnCreer().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			System.out.println("action créer managée");
+			//daoUtilisateur.create(muv.getUtilisateur());
+			
+			}
+		});
+	}
+	
+	
+//	public void validerLesSaisies() {
+//		ValidationPatternsRegex vpr = new ValidationPatternsRegex();
+//		boolean ok = vpr.matchEmail(textFieldMail.getText());
+//		
+//		// mail
+//		if(ok==false && !textFieldMail.getText().isEmpty()) {
+//			//JOptionPane.showMessageDialog(null, vpr.getMessage());
+//			textFieldMail.setBackground(Color.RED);
+//		}else {
+//			textFieldMail.setBackground(null);
+//		}
+//		
+//		//pass
+//		ok = vpr.matchPassword(tfPasswordCompte.getText());
+//		if(ok==false) {
+//			JOptionPane.showMessageDialog(null, vpr.getMessage());
+//			tfPasswordCompte.setBackground(Color.RED);
+//		}else {
+//			tfPasswordCompte.setBackground(Color.WHITE);
+//		}
+//		
+//		//numeric
+//		ArrayList<Integer> listNumerics  = new ArrayList<>();
+////		listNumerics.add(Integer.valueOf(textFieldCodePostale.getText()));
+////		listNumerics.add(Integer.valueOf(textFieldRole.getText()));
+//		//ok = vpr.matchNumeric(listNumerics);
+//		if(ok==false) {
+//			JOptionPane.showMessageDialog(null, vpr.getMessage());
+//			tfPasswordCompte.setBackground(Color.RED);
+//		}else {
+//			tfPasswordCompte.setBackground(Color.WHITE);
+//			
+//		}
+//	}
 }
