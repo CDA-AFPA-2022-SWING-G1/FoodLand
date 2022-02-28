@@ -22,7 +22,9 @@ public class Liste_des_commandes_a_preparerView {
 	{
 		/*JFrame frame;*/
 		JTable table = new JTable();
-		//JScrollPane scrollPane = new JScrollPane();
+		/*
+		 * JScrollPane scrollPane = new JScrollPane();
+		 */
 
 		Vector<String> rowHeader = new Vector<String> ();      
 		rowHeader.add ("id_commande");  
